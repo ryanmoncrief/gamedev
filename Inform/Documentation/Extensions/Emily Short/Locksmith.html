@@ -1,0 +1,185 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN" "http://www.w3.org/TR/html4/loose.dtd"><html><head><meta http-equiv="Content-Type" content="text/html; charset=UTF-8" /><title>Extension</title><script type="text/javascript">	function showExtra(id, imid) {		if (document.getElementById(id).style.display == 'block') {			document.getElementById(id).style.display = 'none';			document.getElementById(imid).src = 'inform:/extra.png';		} else {			document.getElementById(id).style.display = 'block';			document.getElementById(imid).src = 'inform:/extraclose.png';		}	}    function openExtra(id, imid) {    	document.getElementById(id).style.display = 'block';    	document.getElementById(imid).src = 'inform:/extraclose.png';    }    function closeExtra(id, imid) {    	document.getElementById(id).style.display = 'none';    	document.getElementById(imid).src = 'inform:/extra.png';    }</script></head><STYLE TYPE="text/css"><!--.oval, .oval TD{background-image:url('inform:/doc_images/ovoid.png');color:white;}--></STYLE><body><script language="JavaScript">function project() {   return external.Project;}function pasteCode(code) {    var myProject = external.Project;    myProject.selectView('source');    myProject.pasteCode(code);}</script><font size=2><table CELLPADDING=0 CELLSPACING=0 width="100%" bgcolor="#000000"><tr><TD width=38px height=26px align="center" valign="center"><a href="inform://Extensions/Extensions.html" border=0><img border=0 src="inform:/doc_images/Hookindex.png" border=0></a></td><TD width=38px height=26px align="center" valign="center"></td><td halign="left" valign="center" CELLPADDING=0 CELLSPACING=0><font color="#FFFFFF" size=2>Extensions</font></a></td><TD width=56px height=26px align="right" valign="center"><a href="inform:/index.html" border=0><img border=0 src="inform:/doc_images/Hookup.png" border=0></a></td></tr></table><p><script language="JavaScript">
+function pasteCode1030(code) {
+    var myProject = project();
+
+    myProject.selectView('source');
+    myProject.pasteCode('Include Locksmith by Emily Short.[=0x000A=][=0x000A=][=0x000A=]');
+}
+</script>
+<a href="javascript:pasteCode1030()"><img border=0 src=inform:/doc_images/paste.png></a>&nbsp;<b>Locksmith<font color="#404040"> by </font>Emily Short</b><p><small><p>Extension built in to Inform</small><p><p><hr><p>
+<p>
+ Locksmith adds implicit handling of doors and containers so that lock manipulation is automatic if the player has the necessary keys. There are five parts of Locksmith.
+<p>
+ First, Locksmith will try opening all doors the player tries to pass through; try closing all lockables before locking them; and try unlocking all locked items before opening them. Other characters will follow the same rules.
+<p>
+ By default, these actions are described as other automatic actions usually are in Inform: the player sees something like &quot;(first unlocking...)&quot; before he opens the door. The &quot;Use sequential action&quot; mode is provided for the case where we would prefer to see &quot;You unlock the door.&quot; instead.
+<p>
+ If the player tries to open a door but does not have the right key, he receives a key-refusal message, such as &quot;You lack a key that fits the red chest.&quot; We can override this by writing other &quot;to say key-refusal for...&quot; phrases, like this:
+<p>
+<blockquote><font color="#000080"> To say key-refusal for (locked-thing - a container):<br>&nbsp;&nbsp;&nbsp;&nbsp; say &quot;You will be unable to see the contents of [the locked-thing] until you find the appropriate key.&quot;</font></blockquote>
+<p>
+<blockquote><font color="#000080"> To say key-refusal for (locked-thing - the red chest):<br>&nbsp;&nbsp;&nbsp;&nbsp; say &quot;The red chest resists all your attempts because you do not have the magic orb.&quot;</font></blockquote>
+<p>
+ Second, Locksmith tries to provide an intelligent default if no key is specified, so that &gt;LOCK DOOR will work if the player is holding the correct key.
+<p>
+ Third, Locksmith introduces a kind called the passkey. The passkey is a key which will name itself in inventory listings after use. Once the passkey has been identified, the game also automates taking the key before using it on the door it matches. Keys the player has never successfully identified, or keys not defined as belonging to the passkey kind, will not behave this way. Passkeys are also renamed if the player has seen another character use them successfully.
+<p>
+ The &quot;unbolts&quot; relation is used to keep track of what the player knows about keys. We will probably not need to do this in most cases, but it is possible to change this manually during play to give the player new knowledge (or ignorance) about the functions of keys.
+<p>
+ Passkeys can also be used with the keychain kind. Keychains are portable supporters which can have passkeys (but only passkeys) put on them. Keys on a keychain can be used as though they were in the player's hand, and will not be automatically removed for locking and unlocking actions.
+<p>
+ Finally, Locksmith provides the debugging command 'unlockall', only identified in debugging compilations of the game. If during play we type UNLOCKALL, all locks in the game will magically spring open.
+<p>
+ One thing Locksmith does not handle is allowing skeleton keys that unlock multiple locks. This functionality costs some memory overhead, so it is not included compulsorily in Locksmith, but if we want it, we can also include Skeleton Keys by Emily Short.
+<p>
+ Example: * Latches - Adding one lock in the game that is managed by latch rather than by a key.
+<p>
+ Suppose that most of the doors in our game are locked with normal keys, but one is the kind that simply latches. We can handle this with a specific before rule that fires prior to the more general before rules in Locksmith. We also want to treat LOCK X differently from LOCK X WITH..., so we will treat locking and locking keylessly with separate rules. Locking keylessly is the action invoked if the player types only LOCK X.
+<p>
+<blockquote><font color="#000080"><script language="JavaScript">
+function pasteCode1031(code) {
+    var myProject = project();
+
+    myProject.selectView('source');
+    myProject.pasteCode('[=0x0022=]John Malkovich[=0x0027=]s Toilet[=0x0022=][=0x000A=][=0x000A=]Include Locksmith by Emily Short.[=0x000A=][=0x000A=]The Bathroom is a room.[=0x000A=][=0x000A=]The bathroom door is a door. It is north of the Bathroom and south of the Bedroom. It is lockable and locked.[=0x000A=][=0x000A=]Before unlocking keylessly the bathroom door:[=0x000A=][=0x0009=]if the bathroom door is unlocked, say [=0x0022=][The bathroom door] is already unlocked.[=0x0022=] instead;[=0x000A=][=0x0009=]try turning the latch instead.[=0x000A=][=0x000A=]Before locking keylessly the bathroom door:[=0x000A=][=0x0009=]if the bathroom door is locked, say [=0x0022=][The bathroom door] is already secure.[=0x0022=] instead;[=0x000A=][=0x0009=]try turning the latch instead.[=0x000A=][=0x000A=]Before locking the bathroom door with something:[=0x000A=][=0x0009=]say [=0x0022=]The bathroom door locks with a latch, not with a key.[=0x0022=] instead.[=0x000A=][=0x000A=]Before unlocking the bathroom door with something:[=0x000A=][=0x0009=]say [=0x0022=]The bathroom door locks with a latch, not with a key.[=0x0022=] instead.[=0x000A=][=0x000A=]The latch is part of the bathroom door. [=0x0022=]A turnable tab that locks the door.[=0x0022=] Understand [=0x0022=]knob[=0x0022=] as the latch. The description of the bathroom door is [=0x0022=]Uninteresting save for the latch.[=0x0022=][=0x000A=][=0x000A=]Instead of turning the latch:[=0x000A=][=0x0009=]if the bathroom door is locked begin;[=0x000A=][=0x0009=][=0x0009=]say [=0x0022=]Click! You turn the latch, and the door is unlocked[if the door is open] and open[end if].[=0x0022=];[=0x000A=][=0x0009=][=0x0009=]now the bathroom door is unlocked;[=0x000A=][=0x0009=]otherwise;[=0x000A=][=0x0009=][=0x0009=]say [=0x0022=]Click! You turn the latch, and the door is locked[if the door is open], but open; the lock will catch as soon as you shut the door[end if].[=0x0022=];[=0x000A=][=0x0009=][=0x0009=]now the bathroom door is locked;[=0x000A=][=0x0009=]end if.[=0x000A=][=0x000A=]The little black oval door is a door. It is west of the Bathroom and east of Oblivion. It is lockable and locked. The description of the oval door is [=0x0022=]It is in the wall of the shower area, and opens who knows where. You are sure it was not there yesterday.[=0x0022=][=0x000A=][=0x000A=]The onyx key unlocks the oval door. It is in the Bedroom. [=0x0022=]On the floor, jagged black in the square of sunlight, is [an onyx key].[=0x0022=][=0x000A=][=0x000A=]Test me with [=0x0022=]x bathroom door / unlock oval door / unlock bathroom door / g / go through bathroom door / get key / lock bathroom door / close bathroom door / s / lock bathroom door with onyx key / w[=0x0022=].[=0x000A=][=0x000A=]');
+}
+</script>
+<a href="javascript:pasteCode1031()"><img border=0 src=inform:/doc_images/paste.png></a> &quot;John Malkovich's Toilet&quot;</font></blockquote>
+<p>
+<blockquote><font color="#000080"> Include Locksmith by Emily Short.</font></blockquote>
+<p>
+<blockquote><font color="#000080"> The Bathroom is a room.</font></blockquote>
+<p>
+<blockquote><font color="#000080"> The bathroom door is a door. It is north of the Bathroom and south of the Bedroom. It is lockable and locked.</font></blockquote>
+<p>
+<blockquote><font color="#000080"> Before unlocking keylessly the bathroom door:<br>&nbsp;&nbsp;&nbsp;&nbsp; if the bathroom door is unlocked, say &quot;[The bathroom door] is already unlocked.&quot; instead;<br>&nbsp;&nbsp;&nbsp;&nbsp; try turning the latch instead.</font></blockquote>
+<p>
+<blockquote><font color="#000080"> Before locking keylessly the bathroom door:<br>&nbsp;&nbsp;&nbsp;&nbsp; if the bathroom door is locked, say &quot;[The bathroom door] is already secure.&quot; instead;<br>&nbsp;&nbsp;&nbsp;&nbsp; try turning the latch instead.</font></blockquote>
+<p>
+<blockquote><font color="#000080"> Before locking the bathroom door with something:<br>&nbsp;&nbsp;&nbsp;&nbsp; say &quot;The bathroom door locks with a latch, not with a key.&quot; instead.</font></blockquote>
+<p>
+<blockquote><font color="#000080"> Before unlocking the bathroom door with something:<br>&nbsp;&nbsp;&nbsp;&nbsp; say &quot;The bathroom door locks with a latch, not with a key.&quot; instead.</font></blockquote>
+<p>
+<blockquote><font color="#000080"> The latch is part of the bathroom door. &quot;A turnable tab that locks the door.&quot; Understand &quot;knob&quot; as the latch. The description of the bathroom door is &quot;Uninteresting save for the latch.&quot;</font></blockquote>
+<p>
+<blockquote><font color="#000080"> Instead of turning the latch:<br>&nbsp;&nbsp;&nbsp;&nbsp; if the bathroom door is locked begin;<br>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; say &quot;Click! You turn the latch, and the door is unlocked[if the door is open] and open[end if].&quot;;<br>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; now the bathroom door is unlocked;<br>&nbsp;&nbsp;&nbsp;&nbsp; otherwise;<br>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; say &quot;Click! You turn the latch, and the door is locked[if the door is open], but open; the lock will catch as soon as you shut the door[end if].&quot;;<br>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; now the bathroom door is locked;<br>&nbsp;&nbsp;&nbsp;&nbsp; end if.</font></blockquote>
+<p>
+<blockquote><font color="#000080"> The little black oval door is a door. It is west of the Bathroom and east of Oblivion. It is lockable and locked. The description of the oval door is &quot;It is in the wall of the shower area, and opens who knows where. You are sure it was not there yesterday.&quot;</font></blockquote>
+<p>
+<blockquote><font color="#000080"> The onyx key unlocks the oval door. It is in the Bedroom. &quot;On the floor, jagged black in the square of sunlight, is [an onyx key].&quot;</font></blockquote>
+<p>
+<blockquote><font color="#000080"> Test me with &quot;x bathroom door / unlock oval door / unlock bathroom door / g / go through bathroom door / get key / lock bathroom door / close bathroom door / s / lock bathroom door with onyx key / w&quot;.</font></blockquote>
+<p>
+ Example: ** Tobacco - Passkeys that open more than one thing each.
+<p>
+ Here we explore having keys each of which unlocks several items:
+<p>
+<blockquote><font color="#000080"><script language="JavaScript">
+function pasteCode1032(code) {
+    var myProject = project();
+
+    myProject.selectView('source');
+    myProject.pasteCode('[=0x0022=]Tobacco[=0x0022=][=0x000A=][=0x000A=]Include Locksmith by Emily Short.[=0x000A=][=0x000A=]The Hollow Tree is a room. Below the Hollow Tree is the Vast Hall. Northwest of the Vast Hall is a copper door. The copper door is a locked lockable door. Northwest of the copper door is the Copper Chamber. The Copper Chamber contains a chest and a small dog. The chest contains a large quantity of copper pence. The chest is lockable, closed, openable, and locked. The description of the small dog is [=0x0022=]Its eyes are as big as teacups.[=0x0022=] The small dog is an animal. The copper key unlocks the copper door. It unlocks the chest. The copper key is a passkey. The description of the copper key is [=0x0022=]On the head of the key is engraved a precisely delineated teapot.[=0x0022=][=0x000A=][=0x000A=]North of the Vast Hall is a silver door. The silver door is a locked lockable door. North of the silver door is the Silver Chamber. The Silver Chamber contains a sarcophagus and a medium dog. The sarcophagus contains a large quantity of silver pence. The sarcophagus is lockable, closed, openable, and locked. The description of the medium dog is [=0x0022=]Its eyes are as big as millwheels.[=0x0022=] The medium dog is an animal. The silver key unlocks the silver door. It unlocks the sarcophagus. The silver key is a passkey. The description of the silver key is [=0x0022=]On the head of the key is engraved a very small but detailed watermill.[=0x0022=][=0x000A=][=0x000A=]Northeast of the Vast Hall is a gold door. The gold door is a locked lockable door. North of the gold door is the Gold Chamber. The Gold Chamber contains a wardrobe and a large dog. The wardrobe contains a large quantity of gold coins. The wardrobe is lockable, closed, openable, and locked. The description of the large dog is [=0x0022=]Its eyes are as big as towers, and turn round and round in its head like wheels.[=0x0022=] The large dog is an animal. The gold key unlocks the gold door. It unlocks the wardrobe. The gold key is a passkey. The description of the gold key is [=0x0022=]On the head of the key is engraved a very small but detailed tower.[=0x0022=][=0x000A=][=0x000A=]The tinderbox is in the Vast Hall. The tinderbox contains the silver key, the gold key, and the copper key. The tinderbox is openable and closed.[=0x000A=][=0x000A=]The player carries some chewing tobacco and an iron ring. The iron ring is a keychain. The description of the iron ring is [=0x0022=]A ring to hold keys.[=0x0022=][=0x000A=][=0x000A=]Test me with [=0x0022=]test one / test two[=0x0022=].[=0x000A=][=0x000A=]Test one with [=0x0022=]d / n / i / get tinderbox / open tinderbox / i / nw / drop key / lock door / drop key / unlock chest / get copper key / unlock chest / put copper on ring / lock chest / drop ring / unlock chest[=0x0022=].[=0x000A=][=0x000A=]Test two with [=0x0022=]enter door / n / i / x silver / put silver on ring / x copper / unlock sarcophagus / x silver key[=0x0022=].[=0x000A=][=0x000A=]');
+}
+</script>
+<a href="javascript:pasteCode1032()"><img border=0 src=inform:/doc_images/paste.png></a> &quot;Tobacco&quot;</font></blockquote>
+<p>
+<blockquote><font color="#000080"> Include Locksmith by Emily Short.</font></blockquote>
+<p>
+<blockquote><font color="#000080"> The Hollow Tree is a room. Below the Hollow Tree is the Vast Hall. Northwest of the Vast Hall is a copper door. The copper door is a locked lockable door. Northwest of the copper door is the Copper Chamber. The Copper Chamber contains a chest and a small dog. The chest contains a large quantity of copper pence. The chest is lockable, closed, openable, and locked. The description of the small dog is &quot;Its eyes are as big as teacups.&quot; The small dog is an animal. The copper key unlocks the copper door. It unlocks the chest. The copper key is a passkey. The description of the copper key is &quot;On the head of the key is engraved a precisely delineated teapot.&quot;</font></blockquote>
+<p>
+<blockquote><font color="#000080"> North of the Vast Hall is a silver door. The silver door is a locked lockable door. North of the silver door is the Silver Chamber. The Silver Chamber contains a sarcophagus and a medium dog. The sarcophagus contains a large quantity of silver pence. The sarcophagus is lockable, closed, openable, and locked. The description of the medium dog is &quot;Its eyes are as big as millwheels.&quot; The medium dog is an animal. The silver key unlocks the silver door. It unlocks the sarcophagus. The silver key is a passkey. The description of the silver key is &quot;On the head of the key is engraved a very small but detailed watermill.&quot;</font></blockquote>
+<p>
+<blockquote><font color="#000080"> Northeast of the Vast Hall is a gold door. The gold door is a locked lockable door. North of the gold door is the Gold Chamber. The Gold Chamber contains a wardrobe and a large dog. The wardrobe contains a large quantity of gold coins. The wardrobe is lockable, closed, openable, and locked. The description of the large dog is &quot;Its eyes are as big as towers, and turn round and round in its head like wheels.&quot; The large dog is an animal. The gold key unlocks the gold door. It unlocks the wardrobe. The gold key is a passkey. The description of the gold key is &quot;On the head of the key is engraved a very small but detailed tower.&quot;</font></blockquote>
+<p>
+<blockquote><font color="#000080"> The tinderbox is in the Vast Hall. The tinderbox contains the silver key, the gold key, and the copper key. The tinderbox is openable and closed.</font></blockquote>
+<p>
+<blockquote><font color="#000080"> The player carries some chewing tobacco and an iron ring. The iron ring is a keychain. The description of the iron ring is &quot;A ring to hold keys.&quot;</font></blockquote>
+<p>
+<blockquote><font color="#000080"> Test me with &quot;test one / test two&quot;.</font></blockquote>
+<p>
+<blockquote><font color="#000080"> Test one with &quot;d / n / i / get tinderbox / open tinderbox / i / nw / drop key / lock door / drop key / unlock chest / get copper key / unlock chest / put copper on ring / lock chest / drop ring / unlock chest&quot;.</font></blockquote>
+<p>
+<blockquote><font color="#000080"> Test two with &quot;enter door / n / i / x silver / put silver on ring / x copper / unlock sarcophagus / x silver key&quot;.</font></blockquote>
+<p>
+ Example: ** Rekeying - Modifying the way passkey descriptions work.
+<p>
+ As a default, Locksmith describes what passkeys unlock only after printing their default description. Under some circumstances, however, we might want to override that behavior, like this:
+<p>
+<blockquote><font color="#000080"><script language="JavaScript">
+function pasteCode1033(code) {
+    var myProject = project();
+
+    myProject.selectView('source');
+    myProject.pasteCode('[=0x0022=]Rekeying[=0x0022=][=0x000A=][=0x000A=]Include Locksmith by Emily Short.[=0x000A=][=0x000A=]The player carries a passkey called the tin key. The tin key unlocks the tin box. The tin box is closed, openable, lockable, and locked. In the box is a single Cheerio.[=0x000A=][=0x000A=]Cereality is a room. [=0x0022=]The newly-opened [=0x0027=]cereal bar[=0x0027=] allows you to mix and match cereal types at will.[=0x0022=] The box is in Cereality.[=0x000A=][=0x000A=]The passkey description rule is not listed in any rulebook.[=0x000A=][=0x000A=]The description of a passkey is usually [=0x0022=][if the item described unbolts something][The item described] unlocks [the list of things unbolted by the item described][otherwise]You have yet to discover what [the item described] unlocks[end if].[=0x0022=][=0x000A=][=0x000A=]Test me with [=0x0022=]i / x key / unlock box / i / x key[=0x0022=].[=0x000A=][=0x000A=]');
+}
+</script>
+<a href="javascript:pasteCode1033()"><img border=0 src=inform:/doc_images/paste.png></a> &quot;Rekeying&quot;</font></blockquote>
+<p>
+<blockquote><font color="#000080"> Include Locksmith by Emily Short.</font></blockquote>
+<p>
+<blockquote><font color="#000080"> The player carries a passkey called the tin key. The tin key unlocks the tin box. The tin box is closed, openable, lockable, and locked. In the box is a single Cheerio.</font></blockquote>
+<p>
+<blockquote><font color="#000080"> Cereality is a room. &quot;The newly-opened 'cereal bar' allows you to mix and match cereal types at will.&quot; The box is in Cereality.</font></blockquote>
+<p>
+<blockquote><font color="#000080"> The passkey description rule is not listed in any rulebook.</font></blockquote>
+<p>
+<blockquote><font color="#000080"> The description of a passkey is usually &quot;[if the item described unbolts something][The item described] unlocks [the list of things unbolted by the item described][otherwise]You have yet to discover what [the item described] unlocks[end if].&quot;</font></blockquote>
+<p>
+<blockquote><font color="#000080"> Test me with &quot;i / x key / unlock box / i / x key&quot;.</font></blockquote>
+<p>
+ Example: *** Watchtower - Using sequential actions to make the player's activities more equal with those of another character.
+<p>
+ Suppose that instead of the &quot;(first unlocking...)&quot; text, we would like to offer some more interesting flavor text. We might accomplish this by sequential action option is active and then supplying new report rules for specific actions. (Notice that we do not make them After... rules, on the grounds that those would stop the action process. We want to report these actions and allow them to succeed normally.)
+<p>
+<blockquote><font color="#000080"><script language="JavaScript">
+function pasteCode1034(code) {
+    var myProject = project();
+
+    myProject.selectView('source');
+    myProject.pasteCode('[=0x0022=]Watchtower[=0x0022=][=0x000A=][=0x000A=]Use sequential action. Include Locksmith by Emily Short.[=0x000A=][=0x000A=]Bridge is a room. [=0x0022=]Beneath this long, narrow bridge is a gully full of ice-water from the mountains above. It runs milky at this time of year, and is not fit to drink. The air off it is bitterly cold. Just north of here is the Roman watchtower, built square and still defensible despite several centuries of neglect.[=0x0022=][=0x000A=][=0x000A=]North of Bridge is the tower door. The tower door is a lockable locked door. It is scenery. Understand [=0x0022=]watchtower[=0x0022=] as the tower door. The tower door is south of the Watchtower. The large iron key unlocks the tower door. The player carries the large iron key.[=0x000A=][=0x000A=]The description of the Watchtower is [=0x0022=]The wooden floor has mostly rotted away, exposing the square pit in which the paymaster used to keep the soldiers[[=0x0027=]] coin. It is possible to move around the perimeter of the room without falling in, however.[=0x0022=][=0x000A=][=0x000A=]Report unlocking something with something when the player is in Bridge:[=0x000A=][=0x0009=]say [=0x0022=]Shivering and fumbling, you manage to unlock [the noun] with [the second noun]. Your fingers are very nearly numb.[=0x0022=] instead.[=0x000A=][=0x000A=]Report unlocking something with something when the player is in Bridge:[=0x000A=][=0x0009=]say [=0x0022=]Shivering and fumbling, you manage to unlock [the noun] with [the second noun]. Your fingers are very nearly numb.[=0x0022=] instead.[=0x000A=][=0x000A=]Report opening the tower door:[=0x000A=][=0x0009=]say [=0x0022=]The tower door resists your first shove or two, but then falls open.[=0x0022=] instead.[=0x000A=][=0x000A=]Leif is a man in the Bridge.[=0x000A=][=0x000A=]A persuasion rule: persuasion succeeds.[=0x000A=][=0x000A=]Report someone trying unlocking a door with something:[=0x000A=][=0x0009=]say [=0x0022=][The person asked] rattles the handle of [the noun] a few times, then thinks to try [the second noun] on it. [=0x0027=]Bit stiff, this.[=0x0027=][=0x0022=] instead.[=0x000A=][=0x000A=]Report someone trying opening the tower door:[=0x000A=][=0x0009=]say [=0x0022=][The person asked] gives [the tower door] several [if the person asked is in the Bridge]shoves[otherwise]firm tugs[end if] before managing to open it.[=0x0022=] instead.[=0x000A=][=0x000A=]Test me with [=0x0022=]drop key / open door / get key / n / s / lock door / drop key / Leif, get key / Leif, n[=0x0022=].[=0x000A=][=0x000A=]');
+}
+</script>
+<a href="javascript:pasteCode1034()"><img border=0 src=inform:/doc_images/paste.png></a> &quot;Watchtower&quot;</font></blockquote>
+<p>
+<blockquote><font color="#000080"> Use sequential action. Include Locksmith by Emily Short.</font></blockquote>
+<p>
+<blockquote><font color="#000080"> Bridge is a room. &quot;Beneath this long, narrow bridge is a gully full of ice-water from the mountains above. It runs milky at this time of year, and is not fit to drink. The air off it is bitterly cold. Just north of here is the Roman watchtower, built square and still defensible despite several centuries of neglect.&quot;</font></blockquote>
+<p>
+<blockquote><font color="#000080"> North of Bridge is the tower door. The tower door is a lockable locked door. It is scenery. Understand &quot;watchtower&quot; as the tower door. The tower door is south of the Watchtower. The large iron key unlocks the tower door. The player carries the large iron key.</font></blockquote>
+<p>
+<blockquote><font color="#000080"> The description of the Watchtower is &quot;The wooden floor has mostly rotted away, exposing the square pit in which the paymaster used to keep the soldiers['] coin. It is possible to move around the perimeter of the room without falling in, however.&quot;</font></blockquote>
+<p>
+<blockquote><font color="#000080"> Report unlocking something with something when the player is in Bridge:<br>&nbsp;&nbsp;&nbsp;&nbsp; say &quot;Shivering and fumbling, you manage to unlock [the noun] with [the second noun]. Your fingers are very nearly numb.&quot; instead.</font></blockquote>
+<p>
+<blockquote><font color="#000080"> Report unlocking something with something when the player is in Bridge:<br>&nbsp;&nbsp;&nbsp;&nbsp; say &quot;Shivering and fumbling, you manage to unlock [the noun] with [the second noun]. Your fingers are very nearly numb.&quot; instead.</font></blockquote>
+<p>
+<blockquote><font color="#000080"> Report opening the tower door:<br>&nbsp;&nbsp;&nbsp;&nbsp; say &quot;The tower door resists your first shove or two, but then falls open.&quot; instead.</font></blockquote>
+<p>
+<blockquote><font color="#000080"> Leif is a man in the Bridge.</font></blockquote>
+<p>
+<blockquote><font color="#000080"> A persuasion rule: persuasion succeeds.</font></blockquote>
+<p>
+<blockquote><font color="#000080"> Report someone trying unlocking a door with something:<br>&nbsp;&nbsp;&nbsp;&nbsp; say &quot;[The person asked] rattles the handle of [the noun] a few times, then thinks to try [the second noun] on it. 'Bit stiff, this.'&quot; instead.</font></blockquote>
+<p>
+<blockquote><font color="#000080"> Report someone trying opening the tower door:<br>&nbsp;&nbsp;&nbsp;&nbsp; say &quot;[The person asked] gives [the tower door] several [if the person asked is in the Bridge]shoves[otherwise]firm tugs[end if] before managing to open it.&quot; instead.</font></blockquote>
+<p>
+<blockquote><font color="#000080"> Test me with &quot;drop key / open door / get key / n / s / lock door / drop key / Leif, get key / Leif, n&quot;.</font></blockquote>
+<p>
+ Leif will also follow the rules about unlocking and opening doors, and have a few special reports of his own -- though in fact we could also arrange matters so that he is unable to do so, by including the following:
+<p>
+<blockquote><font color="#000080"><script language="JavaScript">
+function pasteCode1035(code) {
+    var myProject = project();
+
+    myProject.selectView('source');
+    myProject.pasteCode('The intelligently opening doors rule is not listed in any rulebook.[=0x000A=]The intelligently closing doors rule is not listed in any rulebook.[=0x000A=]The intelligently closing keyless doors rule is not listed in any rulebook.[=0x000A=]The intelligently opening containers rule is not listed in any rulebook.[=0x000A=][=0x000A=]');
+}
+</script>
+<a href="javascript:pasteCode1035()"><img border=0 src=inform:/doc_images/paste.png></a> The intelligently opening doors rule is not listed in any rulebook.<br> The intelligently closing doors rule is not listed in any rulebook.<br> The intelligently closing keyless doors rule is not listed in any rulebook.<br> The intelligently opening containers rule is not listed in any rulebook.</font></blockquote>
+<p>
+... and now he will be too dim to handle the keys himself.
+<p>
+
+<p>
+<p></body></html>

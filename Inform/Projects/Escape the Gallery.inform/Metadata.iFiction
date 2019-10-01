@@ -1,0 +1,38 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<ifindex version="1.0" xmlns="http://babel.ifarchive.org/protocol/iFiction/">
+    <story>
+        <identification>
+            <ifid>6C3904AA-E236-4C60-ADB1-27885DBF24E8</ifid>
+            <format>zcode</format>
+        </identification>
+        <bibliographic>
+            <title>Escape the Gallery</title>
+            <author>Ryan, Kyle, Sabrina, Michael, and Patrick</author>
+            <headline>An Interactive Fiction</headline>
+            <genre>Fiction</genre>
+            <firstpublished>2018</firstpublished>
+            <language>en</language>
+            <group>Inform</group>
+        </bibliographic>
+        <releases>
+            <attached>
+                <release>
+                    <releasedate>2018-03-04</releasedate>
+                    <version>1</version>
+                    <compiler>Inform 7</compiler>
+                    <compilerversion>6M62</compilerversion>
+                </release>
+            </attached>
+        </releases>
+        <colophon>
+            <generator>Inform 7</generator>
+            <generatorversion>6M62</generatorversion>
+            <originated>2018-03-04</originated>
+        </colophon>
+        <zcode>
+            <serial>180304</serial>
+            <release>1</release>
+            <compiler>Inform 7 build 6M62</compiler>
+        </zcode>
+    </story>
+</ifindex>

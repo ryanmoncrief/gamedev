@@ -1,0 +1,38 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<ifindex version="1.0" xmlns="http://babel.ifarchive.org/protocol/iFiction/">
+    <story>
+        <identification>
+            <ifid>575CEED2-0294-418B-91B5-2A7C24AC94AC</ifid>
+            <format>zcode</format>
+        </identification>
+        <bibliographic>
+            <title>The Pink Pill</title>
+            <author>Ryan</author>
+            <headline>An Interactive Fiction</headline>
+            <genre>Fiction</genre>
+            <firstpublished>2018</firstpublished>
+            <language>en</language>
+            <group>Inform</group>
+        </bibliographic>
+        <releases>
+            <attached>
+                <release>
+                    <releasedate>2018-05-11</releasedate>
+                    <version>1</version>
+                    <compiler>Inform 7</compiler>
+                    <compilerversion>6M62</compilerversion>
+                </release>
+            </attached>
+        </releases>
+        <colophon>
+            <generator>Inform 7</generator>
+            <generatorversion>6M62</generatorversion>
+            <originated>2018-05-11</originated>
+        </colophon>
+        <zcode>
+            <serial>180511</serial>
+            <release>1</release>
+            <compiler>Inform 7 build 6M62</compiler>
+        </zcode>
+    </story>
+</ifindex>

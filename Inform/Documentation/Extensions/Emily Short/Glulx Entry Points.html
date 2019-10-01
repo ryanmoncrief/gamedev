@@ -1,0 +1,111 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN" "http://www.w3.org/TR/html4/loose.dtd"><html><head><meta http-equiv="Content-Type" content="text/html; charset=UTF-8" /><title>Extension</title><script type="text/javascript">	function showExtra(id, imid) {		if (document.getElementById(id).style.display == 'block') {			document.getElementById(id).style.display = 'none';			document.getElementById(imid).src = 'inform:/extra.png';		} else {			document.getElementById(id).style.display = 'block';			document.getElementById(imid).src = 'inform:/extraclose.png';		}	}    function openExtra(id, imid) {    	document.getElementById(id).style.display = 'block';    	document.getElementById(imid).src = 'inform:/extraclose.png';    }    function closeExtra(id, imid) {    	document.getElementById(id).style.display = 'none';    	document.getElementById(imid).src = 'inform:/extra.png';    }</script></head><STYLE TYPE="text/css"><!--.oval, .oval TD{background-image:url('inform:/doc_images/ovoid.png');color:white;}--></STYLE><body><script language="JavaScript">function project() {   return external.Project;}function pasteCode(code) {    var myProject = external.Project;    myProject.selectView('source');    myProject.pasteCode(code);}</script><font size=2><table CELLPADDING=0 CELLSPACING=0 width="100%" bgcolor="#000000"><tr><TD width=38px height=26px align="center" valign="center"><a href="inform://Extensions/Extensions.html" border=0><img border=0 src="inform:/doc_images/Hookindex.png" border=0></a></td><TD width=38px height=26px align="center" valign="center"></td><td halign="left" valign="center" CELLPADDING=0 CELLSPACING=0><font color="#FFFFFF" size=2>Extensions</font></a></td><TD width=56px height=26px align="right" valign="center"><a href="inform:/index.html" border=0><img border=0 src="inform:/doc_images/Hookup.png" border=0></a></td></tr></table><p><script language="JavaScript">
+function pasteCode1021(code) {
+    var myProject = project();
+
+    myProject.selectView('source');
+    myProject.pasteCode('Include Glulx Entry Points by Emily Short.[=0x000A=][=0x000A=][=0x000A=]');
+}
+</script>
+<a href="javascript:pasteCode1021()"><img border=0 src=inform:/doc_images/paste.png></a>&nbsp;<b>Glulx Entry Points<font color="#404040"> by </font>Emily Short</b><p><small><p>Extension built in to Inform</small><p><p><hr><p>
+<p>
+ Please note that this extension is provided as a framework and as a basis for other extensions. Thanks to Eliuk Blau and Jon Ingold for pointing out some bugs in version 5, and to Erik Temple for the patch handling input cancellation that brings us to version 7.
+<p>
+ Chapter: Events
+<p>
+ Glulx allows the author to set responses to certain events:
+<p>
+<blockquote><font color="#000080"> Timer - event repeated at fixed intervals<br> CharInput - keystroke input in a window<br> LineInput - full line of input in a window<br> MouseInput - mouse input in a window<br> Arrange - some windows sizes have changed<br> Redraw - graphic windows need redrawing<br> SoundNotify - sound finished playing<br> Hyperlink - selection of a hyperlink in a window</font></blockquote>
+<p>
+ As of version 10, Glulx Entry Points provides a rulebook, the &quot;glulx input handling rules&quot; so that the author can add responses to the these events without himself having to include any Inform 6 code. The glulx input handling rules is a parameterized rulebook, meaning that the author can specify which event or events a given rule responds to by specifying a kind of value, the &quot;g-event&quot;. The g-events corresponding to the events types described above are:
+<p>
+<blockquote><font color="#000080"> timer-event<br> char-event<br> line-event<br> mouse-event<br> arrange-event<br> redraw-event<br> sound-notify-event<br> hyperlink-event</font></blockquote>
+<p>
+ It is also possible to refer to groups of g-events using adjectives. Two adjectives are provided, though the user could of course create more. These are:
+<p>
+<blockquote><font color="#000080"> independent of the player - includes timer events, sound notification events, arrange events, and redraw events.<br> dependent on the player - includes all other events, i.e. the events that can only happen due to player input.</font></blockquote>
+<p>
+ We can get basic information about the last event handled using these phrases:
+<p>
+<blockquote><font color="#000080"> current glk event - the g-event type last handled.<br> window of the current glk event - if the last event was associated with a window (char-event, line-event, mouse-event, or hyperlink-event), this contains the number of the window's glk reference.</font></blockquote>
+<p>
+ The glulx input handling rulebook replaces the set of eight rulebooks defined in versions of Glulx Entry Points previous to version 9. These rulebooks, listed below, should be considered deprecated and may be removed in a future version of the extension, but for now they will still work just as they did in past versions:
+<p>
+<blockquote><font color="#000080"> The glulx timed activity rules is a rulebook.<br> The glulx redrawing rules is a rulebook.<br> The glulx arranging rules is a rulebook.<br> The glulx mouse input rules is a rulebook.<br> The glulx character input rules is a rulebook.<br> The glulx line input rules is a rulebook.<br> The glulx sound notification rules is a rulebook.<br> The glulx hyperlink rules is a rulebook.</font></blockquote>
+<p>
+ If you are certain that you do not need these rulebooks in a project (i.e., you are not using extensions that employ them), you can stop Inform from calling them by declaring the use option:
+<p>
+<blockquote><font color="#000080"> Use direct event handling.</font></blockquote>
+<p>
+ Chapter: Replacement Commands
+<p>
+ One of the things we may want to do -- especially with mouse input or hyperlinks -- is generate a command for the player. To do this, we set the value of Glulx replacement command to whatever string of text we want to turn into the player's command. If we do this, Inform will treat whatever command we issued in &quot;Glulx replacement command&quot; as though the player had typed it at the command prompt. The extension Basic Hyperlinks builds on this infrastructure and provides an example of how to make use of these features.
+<p>
+ Because the Glulx replacement command is indexed text, it is possible to build on to the string automatically, if for some reason we need to auto-generate our recommended commands.
+<p>
+ Chapter: IdentifyGlkObject
+<p>
+ We also have a series of rulebooks for handling the stages of IdentifyGlkObject:
+<p>
+<blockquote><font color="#000080"> The glulx zeroing-reference rules is a rulebook.<br> The glulx resetting-windows rules is a rulebook.<br> The glulx resetting-streams rules is a rulebook.<br> The glulx resetting-filerefs rules is a rulebook.<br> The glulx object-updating rules is a rulebook.</font></blockquote>
+<p>
+ Examples of the use of these can be seen in the extension Simple Graphics Windows.
+<p>
+ Chapter: Checking on Feature Support (Glulx Gestalts)
+<p>
+ We can test whether the player's interpreter is prepared to support various multimedia features using the following phrases from Glulx Entry Points:
+<p>
+<blockquote><font color="#000080"> if glulx character input is supported...<br> if glulx mouse input is supported...<br> if glulx graphic-window mouse input is supported...<br> if glulx text-grid mouse input is supported...<br> if glulx timekeeping is supported...<br> if glulx graphics is supported...<br> if glulx text-buffer graphics is supported...<br> if glulx graphic-window graphics is supported...<br> if glulx PNG transparency is supported...<br> if glulx sound is supported...<br> if glulx mod sound is supported...<br> if glulx sound volume is supported...<br> if glulx sound notification is supported...<br> if glulx hyperlinks are supported...</font></blockquote>
+<p>
+ Of these:<blockquote><font color="#000080"> &quot;mouse input&quot; refers to our ability to detect clicks at all<br> &quot;timekeeping&quot; to the ability to use a real-time timer<br> &quot;graphics&quot; to the ability to use any graphics<br> &quot;text-buffer&quot; and &quot;graphic-window&quot; graphics to the ability to use graphics specifically in the main window or in a window specially created for graphics<br> &quot;PNG transparency&quot; to whether it will be possible to layer PNG images with transparent alpha channels (this is very useful for manipulating sprites)<br> &quot;sound&quot; to playing any sound, and &quot;mod sound&quot; to sounds specifically in MOD format<br> &quot;sound volume&quot; to the ability to control the volume<br> &quot;sound notification&quot; to detecting when a sound finishes playing<br> &quot;hyperlinks&quot; to the ability to insert mouseclick-sensitive links in the main body of text</font></blockquote>
+<p>
+ These can be used during play to avoid using Glulx features that aren't supported, or at the start of play to warn the player that the chosen interpreter is unable to present the full experience intended by the author.
+<p>
+ Section: A Note on Sound Support
+<p>
+ Currently Inform is not designed to support sound output properly across all systems. The Mac OS X IDE will not play sounds in-game, so if we are developing a sound-rich game on the Mac, we will need to test the sounds by releasing the game file and playing it on a separate interpreter; at the time of writing, the best Mac sound support was provided by Gargoyle.
+<p>
+ Chapter: Useful Phrases
+<p>
+ Two phrases that may be useful to those working with Glulx input/output are provided:
+<p>
+<blockquote><font color="#000080"> update the status line - calls the Inform library's routine to refresh the status window<br> print prompt - calls the Inform library's routine to print the command prompt</font></blockquote>
+<p>
+ Example: * Input Handling - Very basic use of the glulx input handling rules. Shows how to detect events according to whether they are generated by player input, how to override the player's typed input with a replacement command, and how to use the &quot;current glk event&quot; phrase.
+<p>
+<blockquote><font color="#000080"> Include version 10 of Glulx Entry Points by Emily Short.</font></blockquote>
+<p>
+<blockquote><font color="#000080"> Use direct event handling.</font></blockquote>
+<p>
+<blockquote><font color="#000080"> Glk Testing is a room.</font></blockquote>
+<p>
+<blockquote><font color="#000080"> Glulx input handling rule for an independent of the player g-event:<br> say &quot;[bracket]Non-input event detected: [current glk event][close bracket][line break]&quot;.</font></blockquote>
+<p>
+<blockquote><font color="#000080"> Glulx input handling rule for a dependent on the player g-event:<br>&nbsp;&nbsp;&nbsp;&nbsp; say &quot;[bracket]Player input detected: [current glk event][close bracket][line break]&quot;.</font></blockquote>
+<p>
+<blockquote><font color="#000080"> Glulx input handling rule for a line-event:<br>&nbsp;&nbsp;&nbsp;&nbsp; now the Glulx replacement command is &quot;jump&quot;.</font></blockquote>
+<p>
+ Example: * Working Without Sound - Printing a warning at the beginning of the game if the interpreter does not use sound.
+<p>
+<blockquote><font color="#000080"><script language="JavaScript">
+function pasteCode1022(code) {
+    var myProject = project();
+
+    myProject.selectView('source');
+    myProject.pasteCode('[=0x0022=]Working Without Sound[=0x0022=][=0x000A=][=0x000A=]Include Glulx Entry Points by Emily Short.[=0x000A=][=0x000A=]Include Basic Screen Effects by Emily Short.[=0x000A=][=0x000A=]First when play begins:[=0x000A=][=0x0009=]unless glulx sound is supported:[=0x000A=][=0x0009=][=0x0009=]say [=0x0022=]This game uses sound effects extensively. The interpreter you[=0x0027=]re using is unable to play sounds, so you will be missing part of the intended experience.[=0x000A=][=0x000A=]Would you like to continue anyway?[=0x0022=];[=0x000A=][=0x0009=][=0x0009=]unless the player consents:[=0x000A=][=0x0009=][=0x0009=][=0x0009=]stop game abruptly.[=0x000A=][=0x000A=]Royal Albert Hall is a room.[=0x000A=][=0x000A=]Test me with [=0x0022=]listen[=0x0022=].[=0x000A=][=0x000A=]');
+}
+</script>
+<a href="javascript:pasteCode1022()"><img border=0 src=inform:/doc_images/paste.png></a> &quot;Working Without Sound&quot;</font></blockquote>
+<p>
+<blockquote><font color="#000080"> Include Glulx Entry Points by Emily Short.</font></blockquote>
+<p>
+<blockquote><font color="#000080"> Include Basic Screen Effects by Emily Short.</font></blockquote>
+<p>
+<blockquote><font color="#000080"> First when play begins:<br>&nbsp;&nbsp;&nbsp;&nbsp; unless glulx sound is supported:<br>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; say &quot;This game uses sound effects extensively. The interpreter you're using is unable to play sounds, so you will be missing part of the intended experience.<br><br>Would you like to continue anyway?&quot;;<br>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; unless the player consents:<br>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; stop game abruptly.</font></blockquote>
+<p>
+<blockquote><font color="#000080"> Royal Albert Hall is a room.</font></blockquote>
+<p>
+<blockquote><font color="#000080"> Test me with &quot;listen&quot;.</font></blockquote>
+<p>
+
+<p>
+<p></body></html>

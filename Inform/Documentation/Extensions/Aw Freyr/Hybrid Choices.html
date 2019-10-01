@@ -1,0 +1,799 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN" "http://www.w3.org/TR/html4/loose.dtd"><html><head><meta http-equiv="Content-Type" content="text/html; charset=UTF-8" /><title>Extension</title><script type="text/javascript">	function showExtra(id, imid) {		if (document.getElementById(id).style.display == 'block') {			document.getElementById(id).style.display = 'none';			document.getElementById(imid).src = 'inform:/extra.png';		} else {			document.getElementById(id).style.display = 'block';			document.getElementById(imid).src = 'inform:/extraclose.png';		}	}    function openExtra(id, imid) {    	document.getElementById(id).style.display = 'block';    	document.getElementById(imid).src = 'inform:/extraclose.png';    }    function closeExtra(id, imid) {    	document.getElementById(id).style.display = 'none';    	document.getElementById(imid).src = 'inform:/extra.png';    }</script></head><STYLE TYPE="text/css"><!--.oval, .oval TD{background-image:url('inform:/doc_images/ovoid.png');color:white;}--></STYLE><body><script language="JavaScript">function project() {   return external.Project;}function pasteCode(code) {    var myProject = external.Project;    myProject.selectView('source');    myProject.pasteCode(code);}</script><font size=2><table CELLPADDING=0 CELLSPACING=0 width="100%" bgcolor="#000000"><tr><TD width=38px height=26px align="center" valign="center"><a href="inform://Extensions/Extensions.html" border=0><img border=0 src="inform:/doc_images/Hookindex.png" border=0></a></td><TD width=38px height=26px align="center" valign="center"></td><td halign="left" valign="center" CELLPADDING=0 CELLSPACING=0><font color="#FFFFFF" size=2>Extensions</font></a></td><TD width=56px height=26px align="right" valign="center"><a href="inform:/index.html" border=0><img border=0 src="inform:/doc_images/Hookup.png" border=0></a></td></tr></table><p><script language="JavaScript">
+function pasteCode1001(code) {
+    var myProject = project();
+
+    myProject.selectView('source');
+    myProject.pasteCode('Include Hybrid Choices by Aw Freyr.[=0x000A=][=0x000A=][=0x000A=]');
+}
+</script>
+<a href="javascript:pasteCode1001()"><img border=0 src=inform:/doc_images/paste.png></a>&nbsp;<b>Hybrid Choices<font color="#404040"> by </font>AW Freyr</b><p><small><p>Version 7</small><p>Provides a choice-based interface that can be freely switched between interactive and non-interactive modes. Basically, it does CYOA.<p>Kinds: <b>page</b> (a kind of object)<p>Physical creations: <b>no-page</b> (a page)<p>Values that vary: <b>CYOA mode</b>, <b>current page</b>, <b>previous page</b>, <b>assigned index</b>, <b>object-choice-handler</b>, <b>Item-invoking disabled</b>, <b>CYOA debug boolean</b>, <b>CYOA error message</b><p>Actions: <b>Choosing</b>, <b>Item-invoking</b>, <b>Toggling cyoa debug mode</b><p>Verbs: to <b>turn to</b>, to <b>flip to</b>, to <b>need</b>, to <b>cancel</b><p>Adjectives: <b>previously displayed</b>, <b>no-look</b>, <b>an end-page</b>, <b>one-off</b>, <b>a dead-end</b><p>Properties: <b>displayed boolean</b>, <b>cdesc</b>, <b>cyoa teleport</b>, <b>no-look</b>, <b>destination page</b>, <b>end-page</b>, <b>one-off</b>, <b>dead-end</b>, <b>required item</b>, <b>canceling item</b>, <b>active</b>, <b>inactive</b><p>Use options: <b>cyoa examining</b><p><p><hr><p>
+<p>
+ Chapter: Introduction
+<p>
+ This extension is inspired by and heavily adapted from the Adventure Book extension by Edward Griffiths. It features the ability to switch freely between CYOA and interactive modes, has an easily modifiable parser, and better memory economy. If you are familiar with Adventure Book, you will notice a number of similarities. Pages are &quot;pages&quot;, and the relations are familiar if named differently. There are also significant differences. Choices are no longer separate objects, but integrated as a part of the page. Rulebooks provide a more flexible and modular approach to altering the extension's default behavior.
+<p>
+ Section: A Note About the Repeated Description Bug
+<p>
+ Some people have reported duplicated room and page descriptions for a while. I've seen this myself, and I was aware of the problem, but because I am a lazy developer crushed by a demanding and poorly-paying day job, I just haven't had the chance to sit down and fix it until now. Now this is the patch. Rather, this is patch produced by lazily copy-pasting Vince Laviano's fix directly into the extension (thanks random forum guy!). Still, some of these are really beyond my paltry powers, so I'm going to go over three scenarios where you might encounter repeated text and their fixes.
+<p>
+ Scenario 1: Moving the player, as in &quot;now the player is in Hogwarts&quot; will always print a room description, and in the case of CYOA mode will actually print the page description twice. This is hard-coded behavior, and as much as there should be a &quot;Moving the Player to&quot; activity, there isn't. The only way to prevent this is the use of the phrase &quot;move the player to Hogwarts, without printing a room description&quot;. You could also use the &quot;cyoa teleport to Hogwarts&quot; phrase included in this extension.
+<p>
+ Scenario 2: If you are getting repeated page descriptions in the beginning of the game, you are probably using &quot;When play begins: switch to cyoa at p1.&quot; instead of the proper &quot;Instead of looking for the first time: switch to cyoa at p1.&quot; Again, looking at the very beginning of a game is pretty much hardcoded behavior, and there's nothing I can do to prevent it (or really should). Alternatively, you can use the &quot;without looking&quot; phrase option to suppress any duplicated page description, as in &quot;switch to cyoa at p1, without looking&quot;.
+<p>
+ Scenario 3: Using a page-toggle rule to exit CYOA as opposed to simply labeling a page as an end-page will cause the room description to print twice. It is recommended you use the end-page property rather than a page-toggle rule, but if for some reason you need to use the page-toggle rules, you can use &quot;switch from cyoa, without looking&quot; as a temporary fix.
+<p>
+ Section: Version History
+<p>
+<blockquote><font color="#000080"> Version 7, June 21st, 2016<br> -- Fixed a bug where passages were being printed twice (credit to Vince Laviano)<br> -- Added options to remove looking when switching to and from CYOA modes.</font></blockquote>
+<p>
+<blockquote><font color="#000080"> Verstion 6, December 11th, 2015<br> -- Fixed a bug where page-toggle rules were firing twice for dead-end pages, and not for the previous page as intended. Page-output rules were not firing for dead-end pages at all.</font></blockquote>
+<p>
+<blockquote><font color="#000080"> Version 5, November 4th, 2015<br> -- Added adaptive text and responses in an attempt to follow Public Library guidelines.<br> -- Fixed several problems with the examples.</font></blockquote>
+<p>
+<blockquote><font color="#000080"> Version 4, October 6th, 2015<br> -- Major update with significant new features.<br> -- A choice can be an object, and there are now ways of handling choices which are objects.<br> -- Objects can be manually inserted as choices.<br> -- The choice selection response will now more accurately display what was listed as the choice.</font></blockquote>
+<p>
+<blockquote><font color="#000080"> Version 3, August 19th, 2015<br> -- Fixed a bug related to page-output rules not firing.<br> -- Rewrote the choice-displaying functions<br> -- Allowed authors to set choice order through the choice-priority functions.</font></blockquote>
+<p>
+<blockquote><font color="#000080"> Version 2, February 12th, 2015<br> -- Updated for compatibility to Flexible Windows version 15.<br> -- Various typographical fixes (I wrote the previous documentation in a rush)</font></blockquote>
+<p>
+<blockquote><font color="#000080"> Version 1, July 31st, 2014<br> -- Initial Release</font></blockquote>
+<p>
+ Section: Contact
+<p>
+ You can contact me at anotherwannabe93@gmail.com with any questions/problems/suggestions you have. (Apparently, some people have been failing to reach me at that address. It is accurate, so I am not entirely sure what the issue is.)
+<p>
+ Section: Acknowledgements
+<p>
+ Thanks to Hanon Ondricek, who help test and draft this document. He wrote the funny stuff.
+<p>
+ Thanks to Edward Griffiths, who provided the model and direct inspiration for this extension.
+<p>
+ Chapter: What is Hybrid CYOA
+<p>
+ Hybrid CYOA is a CYOA menu-based system that can switch back to interactive modes. At the top level, it simply presents the player with a passage and a list of options.
+<p>
+<blockquote><font color="#000080"> The murderer brandishes a wicked knife at you. What will you do?</font></blockquote>
+<p>
+<blockquote><font color="#000080"> 1) Fight back!<br> 2) Freeze!<br> 3) Run away!</font></blockquote>
+<p>
+ The player can type one of the selected options. That option leads to more options.
+<p>
+<blockquote><font color="#000080"> &gt;1</font></blockquote>
+<p>
+<blockquote><font color="#000080"> What weapon will you use?</font></blockquote>
+<p>
+<blockquote><font color="#000080"> 1) Fists.<br> 2) Sword.<br> 3) Grenade.</font></blockquote>
+<p>
+... and sometimes they won't.
+<p>
+<blockquote><font color="#000080"> &gt;3</font></blockquote>
+<p>
+<blockquote><font color="#000080"> You toss the grenade and kill both yourself and the murderer.</font></blockquote>
+<p>
+<blockquote><font color="#000080"> *** YOU DIED ***</font></blockquote>
+<p>
+ Where Hybrid Choices gets very powerful is how it interacts with the normal parser mode we are all familiar with. Hybrid Choices has the ability to swap back and forth, allowing you to have sequences of CYOA punctuated by normal Interactive Fiction goodness.
+<p>
+<blockquote><font color="#000080"> Where do you want to travel?</font></blockquote>
+<p>
+<blockquote><font color="#000080"> 1) London<br> 2) New York<br> 3) Sydney</font></blockquote>
+<p>
+<blockquote><font color="#000080"> &gt;3</font></blockquote>
+<p>
+<blockquote><font color="#000080"> You take a plane to Sydney.</font></blockquote>
+<p>
+<blockquote><font color="#000080"> You stand before the Sydney Opera House, north of you, and the Government House is to the south. Southwest is a pleasant promenade with shops, and southeast heads off into a beach.</font></blockquote>
+<p>
+<blockquote><font color="#000080"> &gt;</font></blockquote>
+<p>
+ This is really only scratching the surface. There are detailed examples at the end of the document which demonstrate different things you can accomplish with Hybrid Choices. Have fun!
+<p>
+ Chapter: Basic Usage
+<p>
+ Section: Starting up CYOA
+<p>
+ Hybrid Choices allows an author to seamlessly switch between the the Inform parser and a flexible choice-based adventure mode. You can do this by invoking this phrase:
+<p>
+<blockquote><font color="#000080">... switch to cyoa at (PAGE)...</font></blockquote>
+<p>
+... Where PAGE is where you want the player to start making choices.
+<p>
+ If you want the player to start CYOA mode immediately on starting the game, simply drop in this code:
+<p>
+<script language="JavaScript">
+function pasteCode1002(code) {
+    var myProject = project();
+
+    myProject.selectView('source');
+    myProject.pasteCode('[=0x000A=]Instead of looking for the first time:[=0x000A=][=0x0009=]switch to cyoa at YOURPAGEHERE.[=0x000A=][=0x000A=]');
+}
+</script>
+<a href="javascript:pasteCode1002()"><img border=0 src=inform:/doc_images/paste.png></a><blockquote><font color="#000080"> Instead of looking for the first time:<br>&nbsp;&nbsp;&nbsp;&nbsp; switch to cyoa at YOURPAGEHERE.</font></blockquote>
+<p>
+ Returning from CYOA mode is done via an &quot;end-page&quot; which will be explained later.
+<p>
+ Section: Simple Choices
+<p>
+ We can imagine a page as a passage in our favorite adventure books of yore. When we write a &quot;page&quot;, this is like a passage in our story.
+<p>
+<blockquote><font color="#000080"> The first junction is a page.<br> &quot;The tunnel goes left and right.&quot;</font></blockquote>
+<p>
+ This is the simplest page possible. Presumably, it is the first page in our book.
+<p>
+ Now we can add some choices.
+<p>
+<blockquote><font color="#000080"> The left tunnel is a page.<br> &quot;You go left and find yourself in a long corridor.&quot;<br> The cdesc is &quot;Go left.&quot;. It is for the first junction.</font></blockquote>
+<p>
+<blockquote><font color="#000080"> The right tunnel is a page.<br> &quot;You go right and find yourself in a large cave. A little stream runs through it.&quot;<br> The cdesc is &quot;Go right.&quot;. It is for the first junction.</font></blockquote>
+<p>
+ Some notes here. The CDESC stands for &quot;CHOICE DESCRIPTION&quot;, and it is what is displayed when this page is offered as a choice.
+<p>
+ The second thing you'll notice is that the choice is &quot;for the first junction&quot;. This indicates that his page is a choice for the first junction. This is short for &quot;The first junction turns to this page&quot;.
+<p>
+ Flexible CYOA handles multiple pages just fine.
+<p>
+<blockquote><font color="#000080"> The easy choice is a page.<br> &quot;You make the easy choice.&quot;<br> The cdesc is &quot;Do the easy thing.&quot; It is for page1, page2, page3, page4...</font></blockquote>
+<p>
+ Section: Flipping Pages
+<p>
+ Flipped pages are pages we read through but don't &quot;stop&quot; on. We see the passage but then move onto a new page immediately, a very useful function for long passages.
+<p>
+<blockquote><font color="#000080"> p1 is a page.<br> &quot;You keep going...&quot;<br> It flips to p2.</font></blockquote>
+<p>
+<blockquote><font color="#000080"> p2 is a page.<br> &quot;...and going...&quot;<br> It flips to p3.</font></blockquote>
+<p>
+<blockquote><font color="#000080"> p3 is a page.<br> &quot;...and going!&quot;</font></blockquote>
+<p>
+ Hybrid Choices will not bother printing choices for p1 or p2, because we've told I7 to print these pages but immediately skip past them. This comes with a risk. If Hybrid Choices detects that we've written an infinite loop, like this...
+<p>
+<blockquote><font color="#000080"> p1 is a page.<br> &quot;You keep going...&quot;<br> It flips to p2.</font></blockquote>
+<p>
+<blockquote><font color="#000080"> p2 is a page.<br> &quot;...and going...&quot;<br> It flips to p3.</font></blockquote>
+<p>
+<blockquote><font color="#000080"> p3 is a page.<br> &quot;...and going...&quot;<br> It flips to p4.</font></blockquote>
+<p>
+<blockquote><font color="#000080"> p4 is a page.<br> &quot;...and going...&quot;<br> It flips to P2.</font></blockquote>
+<p>
+... Then it will failsafe to the last page where choices were offered, in this case it would be the last page that turned to P1.
+<p>
+ Section: Menus, One-Offs and Dead-Ends
+<p>
+ Pages need not have any content. Somtimes they are useful for just presenting a series of options.
+<p>
+<blockquote><font color="#000080"> The menu is a page.</font></blockquote>
+<p>
+ Now we can refer back to this menu with our other choices.
+<p>
+<blockquote><font color="#000080"> AskAboutPizza is a page.<br> &quot;'What about pizza?' you ask.<br><br>Jenny frowns. 'No, I had some for lunch yesterday.'&quot;<br> The cdesc is &quot;Ask about pizza.&quot; It is for the menu. It is a dead-end. It is one-off.</font></blockquote>
+<p>
+<blockquote><font color="#000080"> AskAboutWine is a page.<br> &quot;'What about wine?' you ask.<br><br>Jenny frowns. 'No, I have to drive home tonight.'&quot;<br> The cdesc is &quot;Ask about wine.&quot; It is for the menu. It is a dead-end. It is one-off.</font></blockquote>
+<p>
+ A page defined as a &quot;dead-end&quot; will return to the original page that sent it there, even through multiple flipped pages! Very useful for menus.
+<p>
+ The second adjective you see is &quot;one-off&quot;. This ensures that, once this choice is picked, it will never be displayed again.
+<p>
+ Section: Page Control
+<p>
+ Sometimes, even when a page turns to another, we might not want to offer it as a choice. Hybrid Choices offers a number of ways to control which choices are displayed based on previous choices. One way we can control this is through use of the &quot;cancel&quot; and &quot;need&quot; relations.
+<p>
+<blockquote><font color="#000080"> P1 is a page.<br> &quot;There is a door. On the wall is a switch that says, 'FLIP TO DISABLE TRAP'.&quot;</font></blockquote>
+<p>
+<blockquote><font color="#000080"> P2 is a page.<br> &quot;You flip the switch. Hmm... you feel imperceptibly safer.&quot;<br> The cdesc is &quot;Flip the switch.&quot; It is for P1. It is a dead end. It is one off.</font></blockquote>
+<p>
+<blockquote><font color="#000080"> P3 is a page.<br> &quot;You travel through the door and are murdered by traps.&quot;<br> The cdesc is &quot;Saunter through the door.&quot; It is canceled by P2. It is for P1.</font></blockquote>
+<p>
+<blockquote><font color="#000080"> P4 is a page.<br> &quot;You safely travel throug the door.&quot;<br> The cdesc is &quot;Saunter through the door.&quot; It is needed by P2. It is for P1.</font></blockquote>
+<p>
+ When a page X &quot;cancels&quot; a page Y, it removes page Y from ever being considered as a choice if page X is visited. When a page X &quot;needs&quot; a page Y, page X will never be considered until page Y is visited. This works for multiple pages, but in a slightly different ways. All of a page's needed pages need to be visited before it becomes a viable choice. However, only one of a page's canceled pages need to be visited to cancel that page.
+<p>
+ The second method is by &quot;activating/deactivating&quot; pages. A page is either &quot;active&quot; or &quot;inactive&quot;. When it is &quot;inactive&quot;, it will not be displayed as a choice. You can do this with a phrase.
+<p>
+<blockquote><font color="#000080">... activate PAGE...<br>... deactivate PAGE...</font></blockquote>
+<p>
+ This will toggle the page. You can even do this in groups. Say we have a game where pages are identifiable by color.
+<p>
+<blockquote><font color="#000080"> After examining the anti-red:<br>&nbsp;&nbsp;&nbsp;&nbsp; say &quot;All that anti-red sears out your eyeballs.&quot;;<br>&nbsp;&nbsp;&nbsp;&nbsp; deactivate red pages;<br>&nbsp;&nbsp;&nbsp;&nbsp; activate ultra-green pages.</font></blockquote>
+<p>
+ This is also useful for the page-toggle rulebook, which will be covered later.
+<p>
+ Section: End-Page
+<p>
+ An end-page, when read, will return the player to the normal parser interface.
+<p>
+<blockquote><font color="#000080"> ChoicesAreDone is a page.<br> &quot;OK, you've finished doing all your choices. Go back to your typety-typety i-can-do-anything-but-disambiguate parser world and you'll find that rope has now been secured to both the tree AND the horse cart with minimal fuss.&quot;<br> The cdesc is &quot;Finish.&quot; It is an end-page.</font></blockquote>
+<p>
+ The original parser will be fully active, and for all purposes it becomes a classic IF game. A location description will be printed, and the game will resume following the every turn rules.
+<p>
+ Chapter: Advanced Topics
+<p>
+ Hybrid Choices has four main rulebooks: choice-switch, page-switch, page-toggle and page-output.
+<p>
+ Section: Choice-Switch
+<p>
+ The choice-switch rules dictate whether a page will be offered as a choice. This provides a much finer level of control than the methods of page control outlined above as you can pretty much dictate whatever you want.
+<p>
+<blockquote><font color="#000080"> A choice-switch rule for the banana page:<br>&nbsp;&nbsp;&nbsp;&nbsp; unless the player carries a banana:<br>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; rule fails.</font></blockquote>
+<p>
+ If the rule fails, the page is suppressed as a choice. If the rule succeeds, the choice is immediately displayed, even if another, later rule would have eliminated it as a choice.
+<p>
+<blockquote><font color="#000080"> A choice-switch rule for the magic page:<br>&nbsp;&nbsp;&nbsp;&nbsp; if the player spoke the magic words:<br>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; rule succeeds.</font></blockquote>
+<p>
+ Here, the magic page is always offered as long as the player spoke the words, *even* if the page is inactive or canceled by an earlier page. This can be very useful.
+<p>
+ Section: Page-Switch
+<p>
+ It is possible at certain points to swap out the page you are currently looking at. This is the purpose of the page-switch. This rulebook switches out one page for another when called. It is useful when you have one choice that has many possibilities depending on the game state, or if you have an event that would stop the player immediately.
+<p>
+<blockquote><font color="#000080"> The p1 is a page.<br> &quot;You are in front of the extra-dimensional door. There is but one thing to do...&quot;</font></blockquote>
+<p>
+<blockquote><font color="#000080"> The p2 is a page.<br> The cdesc is &quot;Open the door.&quot; It is for p1.</font></blockquote>
+<p>
+<blockquote><font color="#000080"> A page-switch rule for p2:<br>&nbsp;&nbsp;&nbsp;&nbsp; let X be a random number between 1 and 6;<br>&nbsp;&nbsp;&nbsp;&nbsp; if X is 1:<br>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; now the current page is InHell;<br>&nbsp;&nbsp;&nbsp;&nbsp; else if X is 2:<br>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; now the current page is InHeaven;<br>&nbsp;&nbsp;&nbsp;&nbsp; else if X is 3:<br>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; now the current page is SomewhereInMongolia;<br>&nbsp;&nbsp;&nbsp;&nbsp; else if X is 4:<br>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; now the current page is InTheVacuumOfSpace;<br>&nbsp;&nbsp;&nbsp;&nbsp; else if X is 5:<br>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; now the current page is AtYourParents;<br>&nbsp;&nbsp;&nbsp;&nbsp; else if X is 6:<br>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; now the current page is StormingNormandyBeach.</font></blockquote>
+<p>
+ As you can see, the page-switch rule works by changing the &quot;current page&quot; at the very last minute. The &quot;current page&quot; is whatever page is being currently processed.
+<p>
+ Section: Page-Toggle
+<p>
+ The page-toggle is used specifically to interact with the model world. It is the bread-and-butter method to give inventory items, adjust the model world, change truth states, etc.
+<p>
+<blockquote><font color="#000080"> A page-toggle rule for TakeTheBanana:<br>&nbsp;&nbsp;&nbsp;&nbsp; now the player carries the banana.</font></blockquote>
+<p>
+ You can also move the player by using the page-toggle rule.
+<p>
+<blockquote><font color="#000080"> A page-toggle rule for ElevatorToThirdFloor:<br>&nbsp;&nbsp;&nbsp;&nbsp; cyoa teleport to Third Floor.</font></blockquote>
+<p>
+ CYOA teleport is used to prevent duplicated text, but is essentially identical to &quot;now the player is in the third floor&quot;.
+<p>
+ Section: Page-Output
+<p>
+ Often, the description is not enough for truly complex pages. If you want something with really complicated prose, the page-output rule is where to put it.
+<p>
+<blockquote><font color="#000080"> A page-output rule for ReallyBoringSpeech:<br>&nbsp;&nbsp;&nbsp;&nbsp; say &quot;[one of]'Read my lips, no new bad things.'[or]'I desire peace between humans and fish.'[or]'I am not a crook.'[at random]&quot;.</font></blockquote>
+<p>
+ If there is also a description, that will also be printed after the page-output rules fire.
+<p>
+ Section: Choice-Displaying
+<p>
+ Normally, a cdesc is the same no matter where it is displayed. The choice-displaying activity determines what is printed when a page is displayed as a choice. This is usually the cdesc, but it can be anything else you want.
+<p>
+<blockquote><font color="#000080"> Rule for choice-displaying the blending page:<br>&nbsp;&nbsp;&nbsp;&nbsp; if the current page is red-blue:<br>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; say &quot;Purple.&quot;;<br>&nbsp;&nbsp;&nbsp;&nbsp; else if the current page is yellow-blue:<br>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; say &quot;Green.&quot;;<br>&nbsp;&nbsp;&nbsp;&nbsp; else if the current page is yellow-red:<br>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; say &quot;Orange.&quot;</font></blockquote>
+<p>
+ This is useful if you want to simulate several choices that are really just one choice leading to the same page.
+<p>
+<blockquote><font color="#000080"> Rule for choice-displaying GoToGarden:<br>&nbsp;&nbsp;&nbsp;&nbsp; if the current page is InTheHall:<br>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; say &quot;Exit the house.&quot;;<br>&nbsp;&nbsp;&nbsp;&nbsp; else if the current page is InTheDriveway:<br>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; say &quot;Take the path to the garden.&quot;</font></blockquote>
+<p>
+ If you want multiple choice on the same page to lead to the same page, it's best to make those pages flip to the desired destination.
+<p>
+ Section: Choice-Priority
+<p>
+ As of Version 3, you can now influence choice order by setting choice-priorities. This is useful if you want options to leave menus on the very bottom rather than somewhere awkward like in the very middle.
+<p>
+ When a choice is elected for selection, it is given a numerical value (by default '50') through the choice-priority rules. The lower the number, the higher it is displayed as a choice.
+<p>
+ Let's say you always want violence to be the last option. We can pretty easily do that now.
+<p>
+<blockquote><font color="#000080"> pkillthem is a page.<br> The cdesc is &quot;Kill them!&quot;<br> The description is &quot;Violence is always the last option.&quot;</font></blockquote>
+<p>
+<blockquote><font color="#000080"> Choice-priority for pkillthem:<br>&nbsp;&nbsp;&nbsp;&nbsp; rule succeeds with result 200.</font></blockquote>
+<p>
+ You can do the opposite as well, always putting a choice on top.
+<p>
+<blockquote><font color="#000080"> phugthem is a page.<br> The cdesc is &quot;Hug them!&quot;<br> The description is &quot;Shnuggles are always appropriate.&quot;</font></blockquote>
+<p>
+<blockquote><font color="#000080"> Choice-priority for phugthem:<br>&nbsp;&nbsp;&nbsp;&nbsp; rule succeeds with result 1.</font></blockquote>
+<p>
+ Chapter: Interaction Between CYOA and Model World
+<p>
+ Hybrid Choices opens the possibility to use the model world in your CYOA projects, and vice-versa. Here's how stuff interacts.
+<p>
+ Section: In CYOA Mode...
+<p>
+ Since Hybrid Choice is not always in CYOA mode, it is often helpful to know which mode we are currently in.
+<p>
+<blockquote><font color="#000080">... if in CYOA mode...</font></blockquote>
+<p>
+ This returns true if we are in CYOA mode. Similarly,
+<p>
+<blockquote><font color="#000080">... if not in CYOA mode...</font></blockquote>
+<p>
+... returns true if we are playing interactively.
+<p>
+ Section: Time
+<p>
+ While Hybrid Choices does allow time to pass (hence making UNDO possible), it suppresses the every turn rulebook. This is generally because these rules are not appropriate in CYOA mode. If you don't like this behavior, you can disable it by unlisting the rule.
+<p>
+<script language="JavaScript">
+function pasteCode1003(code) {
+    var myProject = project();
+
+    myProject.selectView('source');
+    myProject.pasteCode('[=0x000A=]The prevent every turn events rule is not listed in the every turn rulebook.[=0x000A=][=0x000A=]');
+}
+</script>
+<a href="javascript:pasteCode1003()"><img border=0 src=inform:/doc_images/paste.png></a><blockquote><font color="#000080"> The prevent every turn events rule is not listed in the every turn rulebook.</font></blockquote>
+<p>
+ Section: Moving the Player
+<p>
+ You'll often find yourself moving the player around the model world during choice mode. This presents a minor problem, as the passage will print twice. In this case, Hybrid Choices uses a particular function to move the player.
+<p>
+<blockquote><font color="#000080">... cyoa teleport to A LOCATION...</font></blockquote>
+<p>
+ This moves the player without &quot;looking&quot;, thus solving the issue.
+<p>
+<blockquote><font color="#000080"> A page toggle rule for GoingToSchool:<br>&nbsp;&nbsp;&nbsp;&nbsp; cyoa teleport to school.</font></blockquote>
+<p>
+ Section: CYOA Parser
+<p>
+ Hybrid Choices allows for a pretty flexible parser. By default, it allows players to make a choice, use the various testing functions (not in final release, of course), basic commands like looking and taking inventory, and the system commands like save, quit, restore, etc. However, you might want to implement new commands in CYOA mode, for example, examining.
+<p>
+<script language="JavaScript">
+function pasteCode1004(code) {
+    var myProject = project();
+
+    myProject.selectView('source');
+    myProject.pasteCode('[=0x000A=]After reading a command when in cyoa mode (this is the accept examining in CYOA rule):[=0x000A=][=0x0009=]if the player[=0x0027=]s command includes [=0x0022=]x/examine[=0x0022=], now the command accepted is true.[=0x000A=][=0x000A=]');
+}
+</script>
+<a href="javascript:pasteCode1004()"><img border=0 src=inform:/doc_images/paste.png></a><blockquote><font color="#000080"> After reading a command when in cyoa mode (this is the accept examining in CYOA rule):<br>&nbsp;&nbsp;&nbsp;&nbsp; if the player's command includes &quot;x/examine&quot;, now the command accepted is true.</font></blockquote>
+<p>
+ This will allow examining to happen in CYOA mode.
+<p>
+<script language="JavaScript">
+function pasteCode1005(code) {
+    var myProject = project();
+
+    myProject.selectView('source');
+    myProject.pasteCode('[=0x000A=]After reading a command when in cyoa mode (this is the accept examining in CYOA rule):[=0x000A=][=0x0009=]if the player[=0x0027=]s command includes [=0x0022=]xyzzy[=0x0022=], now the command accepted is true.[=0x000A=][=0x000A=]');
+}
+</script>
+<a href="javascript:pasteCode1005()"><img border=0 src=inform:/doc_images/paste.png></a><blockquote><font color="#000080"> After reading a command when in cyoa mode (this is the accept examining in CYOA rule):<br>&nbsp;&nbsp;&nbsp;&nbsp; if the player's command includes &quot;xyzzy&quot;, now the command accepted is true.</font></blockquote>
+<p>
+ This will allow the player to type in &quot;XYZZY&quot;, so you can code some sort of action in response to it.
+<p>
+ Unless you set the &quot;command accepted&quot; to true in your own parser rules, they will automatically be rejected in CYOA mode. By default, the error message that's printed is &quot;That command isn't available in choice mode.&quot; but you can change it to whatever you want.
+<p>
+<blockquote><font color="#000080"> The CYOA error message is &quot;You did wrong, bub.&quot;</font></blockquote>
+<p>
+ The reason a text variable is used rather than a response message is simple, sometimes inconsistent error messages can give a clue, say, when the player has to type a password in a certain room.
+<p>
+<blockquote><font color="#000080"> &gt; ABCCB</font></blockquote>
+<p>
+<blockquote><font color="#000080"> That command isn't available in choice mode.</font></blockquote>
+<p>
+<blockquote><font color="#000080"> &gt; XYZZY</font></blockquote>
+<p>
+<blockquote><font color="#000080"> That command isn't available in CYOA mode.</font></blockquote>
+<p>
+ Use of a text variable ensures consistency in error messages, and avoids giving unintentional clues.
+<p>
+<blockquote><font color="#000080"> Instead of xyzzying:<br>&nbsp;&nbsp;&nbsp;&nbsp; if the player is not in the colossal cave:<br>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; say &quot;[cyoa error message][paragraph break]&quot;;<br>&nbsp;&nbsp;&nbsp;&nbsp; else:<br>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; say &quot;Yeah the cute IF reference works.&quot;</font></blockquote>
+<p>
+ Section: Turn To
+<p>
+ If, by special circumstances, you want to go to a certain page through the use of an action while in choice mode, you'll want to use the &quot;turn to A PAGE&quot; phrase. This phrase causes Hybrid Choices to immediately turn to that page, but still respecting things like page flipping and such.
+<p>
+<blockquote><font color="#000080"> Instead of xyzzying:<br>&nbsp;&nbsp;&nbsp;&nbsp; if the player is not in the colossal cave:<br>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; say &quot;[cyoa error message][paragraph break]&quot;;<br>&nbsp;&nbsp;&nbsp;&nbsp; else:<br>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; turn to the victory page.</font></blockquote>
+<p>
+ You do not want to use this outside of choice mode, IT WILL NOT WORK. If you want to go into choice mode from interactive mode, use the &quot;switch to cyoa at A PAGE&quot; instead.
+<p>
+ Section: Items
+<p>
+ Like Adventure Book, Hybrid Choices makes use of items. Unlike Adventure Book, however, inventory items are not special sorts of flags, they're actual things in the player's inventory and things around them. A key picked up in interactive mode can be used to open a door in choice mode, and vice versa.
+<p>
+<blockquote><font color="#000080"> unlockdoor is a page.<br> &quot;You unlock the door with the bronze key.&quot;<br> The cdesc is &quot;Unlock the door.&quot; The required item is the bronze key.</font></blockquote>
+<p>
+ The &quot;required item&quot; of any give page is the thing that's needed in the player's inventory to reveal it. A page can only have one required item at a time.
+<p>
+ Similarly, the &quot;canceling item&quot; is an object that suppresses a page if the player is lugging it around.
+<p>
+<blockquote><font color="#000080"> hitdoor is a page.<br> &quot;Without a key, you hit the door with futility.&quot;<br> The cdesc is &quot;Hit door.&quot; The canceling item is the bronze key.</font></blockquote>
+<p>
+ Another way you can use items is through the &quot;item-invoking&quot; action. This action allows the player to type the name of a thing in interactive mode, for example, a key, and have that prompt a certain action. By default, item-invoking is disabled. You'll need to activate it by switching the &quot;item-invoking disabled&quot; truth state to false.
+<p>
+<script language="JavaScript">
+function pasteCode1006(code) {
+    var myProject = project();
+
+    myProject.selectView('source');
+    myProject.pasteCode('[=0x000A=]When play begins:[=0x000A=][=0x0009=]now item-invoking disabled is false.[=0x000A=][=0x000A=]');
+}
+</script>
+<a href="javascript:pasteCode1006()"><img border=0 src=inform:/doc_images/paste.png></a><blockquote><font color="#000080"> When play begins:<br>&nbsp;&nbsp;&nbsp;&nbsp; now item-invoking disabled is false.</font></blockquote>
+<p>
+ Now you'll need to supply the behaviors when you do item-invoking. By default, it just says &quot;The thing can't be used here.&quot;, which isn't very exciting. There are a couple of applications for it, you can use it for inventory management, or you can use it as a way to interact with objects outside of the player's inventory.
+<p>
+ This is a very quick example of a system which opens a menu whenever you item-invoke something.
+<p>
+<script language="JavaScript">
+function pasteCode1007(code) {
+    var myProject = project();
+
+    myProject.selectView('source');
+    myProject.pasteCode('[=0x000A=]A thing has an object called the item menu. The item menu is usually nothing.[=0x000A=][=0x000A=]Check item-invoking something:[=0x000A=][=0x0009=]if the item menu of the noun is not a page:[=0x000A=][=0x0009=][=0x0009=]say [=0x0022=][The noun] [are] not very interesting.[=0x0022=] instead.[=0x000A=][=0x000A=]Carry out item-invoking something:[=0x000A=][=0x0009=]turn to item menu of the noun.[=0x000A=][=0x000A=]The block item-invoking rule is not listed in the report item-invoking rulebook.[=0x000A=][=0x000A=]');
+}
+</script>
+<a href="javascript:pasteCode1007()"><img border=0 src=inform:/doc_images/paste.png></a><blockquote><font color="#000080"> A thing has an object called the item menu. The item menu is usually nothing.</font></blockquote>
+<p>
+<blockquote><font color="#000080"> Check item-invoking something:<br>&nbsp;&nbsp;&nbsp;&nbsp; if the item menu of the noun is not a page:<br>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; say &quot;[The noun] [are] not very interesting.&quot; instead.</font></blockquote>
+<p>
+<blockquote><font color="#000080"> Carry out item-invoking something:<br>&nbsp;&nbsp;&nbsp;&nbsp; turn to item menu of the noun.</font></blockquote>
+<p>
+<blockquote><font color="#000080"> The block item-invoking rule is not listed in the report item-invoking rulebook.</font></blockquote>
+<p>
+ Section: Note on Flexible Windows
+<p>
+ If you include Flexible Windows by Jon Ingold, a little choice window is displayed at the bottom of the page. Hybrid Choices will not compile with Flexible Windows version 14 and below.
+<p>
+ In any case, Hybrid Choices provides you some tools to add a choice window. If you don't use Flexible Windows butsome other interface extension you'll need to provide your own code for each of these three phrases.
+<p>
+<blockquote><font color="#000080"> SET CHOICE-WINDOW- This opens the choice-window.<br> UNSET CHOICE-WINDOW- This closes the choice-window.<br> REFRESH CHOICES- This prints the choices to the choice-window.</font></blockquote>
+<p>
+ Section: Debug mode
+<p>
+ Finally, while testing, cyoa debug mode can be toggled on and off by typing &quot;cyoa debug&quot;. This will print all the pages you passed.
+<p>
+ Chapter: Advanced Topic - Object Choices
+<p>
+ As of Version 4, there is no restriction on what object can be a choice. This makes Hybrid Choices very powerful in how it can manipulate the model world, and lifts a lot of prior limitations. In Hybrid Choices parlance, an &quot;object choice&quot; is a choice which is not a page.
+<p>
+ You might be wonder -- what's the point of this? Why would I want objects to be pages? Well, assume you want to an action that brings up all interactive objects in one room as choices. For example, a &quot;list visible objects&quot; command that will let players open a menu of all visible objects that can be examined. Previously, you would need to make a page for each single object, then write page-toggle rules for each of them, and choice-switch rules in case they aren't visible. Object Choices automates what would otherwise be a laborious process.
+<p>
+ This is all very powerful but comes with the caveat that Hybrid Choices doesn't assume how you want to manipulate object-choices, so some work is necessary to get the full benefit out of them. Once you do, you can use Hybrid Choices to construct action menus, fast travel, node-based conversation systems, or anything, really. &quot;Colored Rooms&quot; and &quot;The Lineup&quot; both present examples of how you could implement object choices.
+<p>
+ Section: Presenting Objects as Choices
+<p>
+ Object have to be manually inserted as choices using the POPULATE CHOICE LIST WITH phrase.
+<p>
+<blockquote><font color="#000080"> populate choice list with visible people who are not the player.<br> populate choice list with round balls.<br> populate choice list with grandma.</font></blockquote>
+<p>
+ These place these objects as a choices in the next menu, along with any other pages they might refer to. It's recommended you perform this function with the page-toggle rules.
+<p>
+<blockquote><font color="#000080"> A page-toggle rule for #killallmartians:<br>&nbsp;&nbsp;&nbsp;&nbsp; populate choice list with living martians.</font></blockquote>
+<p>
+ These options are only valid once, so you need to repopulate them again if you want to use them again.
+<p>
+ Objects, like pages, can be manipulated using the choice-priority and choice-display.
+<p>
+<blockquote><font color="#000080"> Choice-priority for a Martian:<br>&nbsp;&nbsp;&nbsp;&nbsp; rule succeeds with result 1.</font></blockquote>
+<p>
+<blockquote><font color="#000080"> Choice-display a Martian (called the poolord):<br>&nbsp;&nbsp;&nbsp;&nbsp; say &quot;Kill [poolord].&quot;</font></blockquote>
+<p>
+ Section: Handling Objects
+<p>
+ By default, if an object is chosen, nothing happens. You are simply booted out of cyoa mode. You need to teach Hybrid Choices how to handle object choices.
+<p>
+ This is mostly done through the General Choose Object rules.
+<p>
+<blockquote><font color="#000080"> General choose object rule for a martian (called N):<br>&nbsp;&nbsp;&nbsp;&nbsp; say &quot;You brutally murder the unarmed Martian. Now you feel both safe AND empowered.&quot;;<br>&nbsp;&nbsp;&nbsp;&nbsp; now N is dead.</font></blockquote>
+<p>
+ This implementation is good enough if your applications are limited. However, Hybrid Choices provides us a method of changing the rulebook to check objects. This rulebook is called the object-choice-handler. Changing the object-choice-handler changes which rulebook is consulted. The one restriction is that these must be object-based rulebooks.
+<p>
+<blockquote><font color="#000080"> The murder rules are an object based rulebook.</font></blockquote>
+<p>
+<blockquote><font color="#000080"> A page-toggle rule for #killallmartians:<br>&nbsp;&nbsp;&nbsp;&nbsp; now the object-choice-handler are the murder rules;<br>&nbsp;&nbsp;&nbsp;&nbsp; populate choice list with living martians.</font></blockquote>
+<p>
+<blockquote><font color="#000080"> Murder a martian (called N):<br>&nbsp;&nbsp;&nbsp;&nbsp; say &quot;You brutally murder the unarmed Martian. Now you feel both safe AND empowered.&quot;;<br>&nbsp;&nbsp;&nbsp;&nbsp; now N is dead.</font></blockquote>
+<p>
+ One problem. After we've picked an object we are booted to interactive mode, and we might not want that. All we need do is designate a page to go to. We manually change the current page.
+<p>
+<blockquote><font color="#000080"> Murder a martian (called N):<br>&nbsp;&nbsp;&nbsp;&nbsp; say &quot;You brutally murder the unarmed Martian. Now you feel both safe AND empowered.&quot;;<br>&nbsp;&nbsp;&nbsp;&nbsp; now N is dead;<br>&nbsp;&nbsp;&nbsp;&nbsp; now the current page is asafespace.</font></blockquote>
+<p>
+<blockquote><font color="#000080"> asafespace is a page.<br> &quot;Finally. A safe space.&quot;.</font></blockquote>
+<p>
+ Chapter: Advanced Topic - Memory Economy
+<p>
+ Hybrid Choices uses more properties and relations than strictly necessary. Much of this is merely convenience, and larger projects might benefit if they comment out certain parts of the extension. It is recommended if you are running into memory issues to copy-paste the extension in to their source code without the folllowing sections-- &quot;section d - page-dependent&quot;. This includes two various-to-various relations and is a major memory hog.
+<p>
+ Chapter: Reference
+<p>
+ Section: Action Reference
+<p>
+<blockquote><font color="#000080"> choosing -- The action that is invoked when the player enters a choice.<br> item-invoking -- The action that is invoked when the player types the name of an object in choice mode.<br> toggling cyoa debug mode -- An action out of world which toggles CYOA debug mode on and off.</font></blockquote>
+<p>
+ Section: Rulebook Reference
+<p>
+<blockquote><font color="#000080"> choice-displaying activity -- An activity on objects which prints a particular choice.<br> choice-priority rules -- An object based rulebook producing a number, the lower, the higher the choice is displayed.<br> choice-switch rules -- A page based rulebook which determines whether a choice will be displayed.<br> displaying available decisions activity -- Prints a list of available decisions<br> general choose object rules -- An object based rulebook that tells Hybrid Choices how to handle objects if chosen instead of pages.<br> page-output rules -- A page based rulebook that prints complex text when the page is displayed<br> page-switch rules -- A page based rulebook which switches the current page if necessary.<br> page-toggle rules -- A page based rulebook which manipulates the model the world.<br> selecting activity -- goes through the internal machinery when a choice is made. This should probably not be messed with unless with great care.</font></blockquote>
+<p>
+ Section: Variables Reference
+<p>
+<blockquote><font color="#000080"> assigned index -- a number that's used internally. We recommend not fiddling with this.<br> current page -- the page that's currently being processed.<br> CYOA debug boolean -- a truth state that records whether in debug mode.<br> CYOA error message -- a text that contains the error message that's printed when the parser fails.0<br> CYOA mode -- a truth state that records whether the game is in CYOA mode.<br> item-invoking disabled -- when true, disallows the item-invoking action.<br> object-choice-handler -- an objects based rulebook variable, holding by default the general choose object rules, which decides which rulebook is consulted when an object is chosen.<br> previous page -- the last page that offered the player a choice.</font></blockquote>
+<p>
+ Section: Page Properties Reference
+<p>
+<blockquote><font color="#000080"> (If you are having memory problems, going into the extension and commenting out properties you don't need is a good way to improve performance. There are more than are strictly necessary, but I wanted to be complete.)<br> active, inactive -- assignable adjective, determines whether a page will be or not be displayed.<br> canceling item -- object property, the page is never displayed while this is detected in inventory.<br> cdesc -- text property, the text that's displayed while this is detected in inventory.<br> cyoa teleport -- object property, when used, teleports the player into the specified object.<br> destination page -- not assignable, the page which this goes to when it flips to another page.<br> displayed boolean -- truth state property, set as &quot;true&quot; if the page has ever been displayed.<br> end-page -- assignable adjective, ends CYOA mode.<br> one-off -- assignable adjective, marks a page which is never displayed again once chosen.<br> no-look (deprecated) -- assignable adjective, suppressed double prints when they occurred. Use CYOA teleport instead.<br> required item -- object property, the page is only displayed as a choice if this is detected in the inventory.</font></blockquote>
+<p>
+ Section: Phrase Reference
+<p>
+<blockquote><font color="#000080"> ACTIVATE (A PAGE) -- switches the page to active.<br> ACTIVATE (DESCRIPTION OF PAGES) -- switches the description of pages to active.<br> ACTIVATE (LIST OF PAGES) -- switches a list of pages to active.<br> CLEAR CHOICES -- clears all choices, in preperation for a new set. Best not used.<br> CYOA TELEPORT TO (OBJECT) -- moves the player to the object without printing a room description.<br> DEACTIVATE (A PAGE) -- switches the page to inactive.<br> DEACTIVATE (DESCRIPTION OF PAGES) -- switches the description of pages to inactive.<br> DEACTIVATE (LIST OF PAGES) -- switches a list of pages to inactive.<br> EXECUTE PAGE TURNING -- this phrase move to a new current page, with respect to page-flipping, dead-ends, and various rules. Best not used.<br> if IN CYOA DEBUG MODE -- returns true if in CYOA debug mode.<br> if IN CYOA MODE -- returns true if in CYOA mode.<br> if NOT IN CYOA MODE -- returns false if in CYOA mode.<br> POPULATE CHOICE LIST WITH (object) -- manually inserts an object into a choice list.<br> POPULATE CHOICE LIST WITH (description of objects) -- manually inserts all objects matching a description into a choice list.<br> POPULATE CHOICE LISTS FOR (page) -- inserts all pages into the choice list that turn from the page.<br> if READING (A PAGE) -- a more readable way of ask if the current page is that page.<br> REFRESH CHOICES -- reprints all the choices in the choice-window.<br> SET CHOICE-WINDOW -- opens the choice window, if using Flexible Windows.<br> SWITCH FROM CYOA -- switches to interactive mode from choice mode.<br> SWITCH TO CYOA AT (A PAGE) -- switches from interactive mode to cyoa mode at the specified page.<br> TURN TO (A PAGE) -- makes this page the new current page and executes the page turning routine.<br> UNSET CHOICE-WINDOW -- closes the choice window, if using Flexible Windows.</font></blockquote>
+<p>
+ Example: * The Only Room - A very short and entirely abstract game used for testing.
+<p>
+<script language="JavaScript">
+function pasteCode1008(code) {
+    var myProject = project();
+
+    myProject.selectView('source');
+    myProject.pasteCode('[=0x000A=][=0x0022=]The Only Room[=0x0022=] by AW Freyr[=0x000A=][=0x000A=]Include Hybrid Choices by AW Freyr.[=0x000A=][=0x000A=]The only room is a room.[=0x000A=][=0x000A=]After looking for the first time:[=0x000A=][=0x0009=]switch to cyoa at p1.[=0x000A=][=0x000A=]P1 is a page.[=0x000A=][=0x000A=]P2 is a page. The cdesc is [=0x0022=]P2[=0x0022=]. It is for P1.[=0x000A=][=0x000A=]P3 is a page. The cdesc is [=0x0022=]P3[=0x0022=]. It is for P2.[=0x000A=][=0x000A=]P4 is a page. It is flipped to by P3.[=0x000A=][=0x0022=]Whoa. Interesting.[=0x0022=].[=0x000A=][=0x000A=]P5 is a page. It is flipped to by P4.[=0x000A=][=0x0022=]Damn man. That[=0x0027=]s crazy stuff.[=0x0022=][=0x000A=][=0x000A=]P6 is a page. The cdesc is [=0x0022=]P6[=0x0022=]. It is for P5. It is a dead-end.[=0x000A=][=0x0022=]You[=0x0027=]ve encountered something and ran away.[=0x0022=][=0x000A=][=0x000A=]P7 is a page. The cdesc is [=0x0022=]P7[=0x0022=]. It is for p5.[=0x000A=][=0x000A=]P8 is a page. The cdesc is [=0x0022=]P8[=0x0022=]. It is for p5. It is inactive.[=0x000A=][=0x0022=]You aren[=0x0027=]t supposed to see this.[=0x0022=][=0x000A=][=0x000A=]');
+}
+</script>
+<a href="javascript:pasteCode1008()"><img border=0 src=inform:/doc_images/paste.png></a><blockquote><font color="#000080"> &quot;The Only Room&quot; by AW Freyr</font></blockquote>
+<p>
+<blockquote><font color="#000080"> Include Hybrid Choices by AW Freyr.</font></blockquote>
+<p>
+<blockquote><font color="#000080"> The only room is a room.</font></blockquote>
+<p>
+<blockquote><font color="#000080"> After looking for the first time:<br>&nbsp;&nbsp;&nbsp;&nbsp; switch to cyoa at p1.</font></blockquote>
+<p>
+<blockquote><font color="#000080"> P1 is a page.</font></blockquote>
+<p>
+<blockquote><font color="#000080"> P2 is a page. The cdesc is &quot;P2&quot;. It is for P1.</font></blockquote>
+<p>
+<blockquote><font color="#000080"> P3 is a page. The cdesc is &quot;P3&quot;. It is for P2.</font></blockquote>
+<p>
+<blockquote><font color="#000080"> P4 is a page. It is flipped to by P3.<br> &quot;Whoa. Interesting.&quot;.</font></blockquote>
+<p>
+<blockquote><font color="#000080"> P5 is a page. It is flipped to by P4.<br> &quot;Damn man. That's crazy stuff.&quot;</font></blockquote>
+<p>
+<blockquote><font color="#000080"> P6 is a page. The cdesc is &quot;P6&quot;. It is for P5. It is a dead-end.<br> &quot;You've encountered something and ran away.&quot;</font></blockquote>
+<p>
+<blockquote><font color="#000080"> P7 is a page. The cdesc is &quot;P7&quot;. It is for p5.</font></blockquote>
+<p>
+<blockquote><font color="#000080"> P8 is a page. The cdesc is &quot;P8&quot;. It is for p5. It is inactive.<br> &quot;You aren't supposed to see this.&quot;</font></blockquote>
+<p>
+ Example: ** Eating a Banana - A simple demonstration of item-invoking and how it might be implemented in a large project.
+<p>
+<script language="JavaScript">
+function pasteCode1009(code) {
+    var myProject = project();
+
+    myProject.selectView('source');
+    myProject.pasteCode('[=0x000A=][=0x0022=]Eating a Banana[=0x0022=] by AW Freyr[=0x000A=][=0x000A=]Include Hybrid Choices by AW Freyr.[=0x000A=][=0x000A=]A thing has an object called the item menu. The item menu is usually nothing.[=0x000A=][=0x000A=]Check item-invoking something:[=0x000A=][=0x0009=]if the item menu of the noun is not a page:[=0x000A=][=0x0009=][=0x0009=]say [=0x0022=][The noun] [are] not very interesting.[=0x0022=] instead.[=0x000A=][=0x000A=]Carry out item-invoking something:[=0x000A=][=0x0009=]turn to item menu of the noun.[=0x000A=][=0x000A=]The block item-invoking rule is not listed in the report item-invoking rulebook.[=0x000A=][=0x000A=]The banana is a thing carried by the player. The item menu is b1.[=0x000A=][=0x000A=]b1 is a page. It is a dead-end.[=0x000A=][=0x0022=]You eat the banana.[=0x0022=][=0x000A=][=0x000A=]A page-toggle rule for b1:[=0x000A=][=0x0009=]now the banana is off-stage.[=0x000A=][=0x000A=]p1 is a page.[=0x000A=][=0x0022=]You get the feeling there[=0x0027=]s no way out except eating a banana.[=0x0022=][=0x000A=][=0x000A=]The blue room is a room.[=0x000A=][=0x000A=]After looking for the first time:[=0x000A=][=0x0009=]now the item-invoking disabled is false;[=0x000A=][=0x0009=]switch to cyoa at p1.[=0x000A=][=0x000A=]');
+}
+</script>
+<a href="javascript:pasteCode1009()"><img border=0 src=inform:/doc_images/paste.png></a><blockquote><font color="#000080"> &quot;Eating a Banana&quot; by AW Freyr</font></blockquote>
+<p>
+<blockquote><font color="#000080"> Include Hybrid Choices by AW Freyr.</font></blockquote>
+<p>
+<blockquote><font color="#000080"> A thing has an object called the item menu. The item menu is usually nothing.</font></blockquote>
+<p>
+<blockquote><font color="#000080"> Check item-invoking something:<br>&nbsp;&nbsp;&nbsp;&nbsp; if the item menu of the noun is not a page:<br>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; say &quot;[The noun] [are] not very interesting.&quot; instead.</font></blockquote>
+<p>
+<blockquote><font color="#000080"> Carry out item-invoking something:<br>&nbsp;&nbsp;&nbsp;&nbsp; turn to item menu of the noun.</font></blockquote>
+<p>
+<blockquote><font color="#000080"> The block item-invoking rule is not listed in the report item-invoking rulebook.</font></blockquote>
+<p>
+<blockquote><font color="#000080"> The banana is a thing carried by the player. The item menu is b1.</font></blockquote>
+<p>
+<blockquote><font color="#000080"> b1 is a page. It is a dead-end.<br> &quot;You eat the banana.&quot;</font></blockquote>
+<p>
+<blockquote><font color="#000080"> A page-toggle rule for b1:<br>&nbsp;&nbsp;&nbsp;&nbsp; now the banana is off-stage.</font></blockquote>
+<p>
+<blockquote><font color="#000080"> p1 is a page.<br> &quot;You get the feeling there's no way out except eating a banana.&quot;</font></blockquote>
+<p>
+<blockquote><font color="#000080"> The blue room is a room.</font></blockquote>
+<p>
+<blockquote><font color="#000080"> After looking for the first time:<br>&nbsp;&nbsp;&nbsp;&nbsp; now the item-invoking disabled is false;<br>&nbsp;&nbsp;&nbsp;&nbsp; switch to cyoa at p1.</font></blockquote>
+<p>
+ Example: *** Temple of Fear - A full, basic game demonstrating a lot of different features.
+<p>
+ Here is a full example of a game made with Hybrid Choices, in the style of Fighting Fantasy adventure books that some of you might be familiar with. This example doesn't include switching to parser modes, but assumes the whole game will be in CYOA.
+<p>
+<script language="JavaScript">
+function pasteCode1010(code) {
+    var myProject = project();
+
+    myProject.selectView('source');
+    myProject.pasteCode('[=0x000A=][=0x000A=][=0x0022=]Temple of Fear[=0x0022=] by AW Freyr[=0x000A=][=0x000A=]Include Hybrid Choices by AW Freyr.[=0x000A=][=0x000A=]Chapter - Set Up[=0x000A=][=0x000A=]The current stamina is a number that varies. The current stamina is 20.[=0x000A=]The initial stamina is a number that varies. The initial stamina is 20.[=0x000A=][=0x000A=]The skill is a number that varies. The skill is 10.[=0x000A=][=0x000A=]The luck is a number that varies. The luck is 10.[=0x000A=][=0x000A=]After looking for the first time:[=0x000A=][=0x0009=]now the left hand status line is [=0x0022=]Stamina: [current stamina]/[initial stamina] Skill: [skill] Luck: [luck][=0x0022=];[=0x000A=][=0x0009=]now the right hand status line is [=0x0022=][=0x0022=];[=0x000A=][=0x0009=]switch to cyoa at p1.[=0x000A=][=0x000A=]The sword is a thing. It is carried by the player.[=0x000A=]A meal is a kind of thing. The player is carrying 4 meals.[=0x000A=][=0x000A=]The bronze key is a thing.[=0x000A=][=0x000A=]Chapter - Temple of Fear[=0x000A=][=0x000A=]The game world is a room.[=0x000A=][=0x000A=]P1 is a page.[=0x000A=][=0x0022=]You have just slain the Troll of Bigness, and are ready to make your way into the Temple of Fear. It[=0x0027=]s just over the bridge to the north.[=0x0022=][=0x000A=][=0x000A=]P2 is a page.[=0x000A=][=0x0022=][first time]You cross the bridge and find yourself in a huge forest. [only]The door to the Temple of Fear is north. There is a path through the forest to your left.[=0x0022=][=0x000A=]The cdesc is [=0x0022=]Cross the bridge.[=0x0022=] It is for p1.[=0x000A=][=0x000A=]A page-toggle rule for p2:[=0x000A=][=0x0009=]now the cdesc of p2 is [=0x0022=]Head back to the Temple of Fear.[=0x0022=][=0x000A=][=0x000A=]p3 is a page.[=0x000A=]It is flipped to by p2.[=0x000A=][=0x000A=]p4 is for p3.[=0x000A=][=0x0022=]You check the door, but it appears to have a lock or something. Damn.[=0x0022=][=0x000A=]The cdesc is [=0x0022=]Check the door.[=0x0022=]. It is a dead-end.[=0x000A=][=0x000A=]A page-switch rule for p4:[=0x000A=][=0x0009=]if the player is carrying the bronze key:[=0x000A=][=0x0009=][=0x0009=]now the current page is p12.[=0x000A=][=0x000A=]p5 is for p3. It is one-off.[=0x000A=][=0x0022=]You travel through the forest and eventually encounter a troll.[=0x0022=][=0x000A=]The cdesc is [=0x0022=]Go to the forest.[=0x0022=].[=0x000A=][=0x000A=]A choice-switch rule for p5:[=0x000A=][=0x0009=]if the player carries the bronze key:[=0x000A=][=0x0009=][=0x0009=]rule fails.[=0x000A=][=0x000A=]p6 is for p5.[=0x000A=][=0x0022=]You slay the troll and lose 4 stamina in the process as it clubs you.[=0x0022=][=0x000A=]The cdesc is [=0x0022=]Kill the troll by stabbing it.[=0x0022=].[=0x000A=][=0x000A=]A page-toggle rule for p6:[=0x000A=][=0x0009=]now the current stamina is current stamina - 4.[=0x000A=][=0x000A=]p7 is for p5.[=0x000A=][=0x0022=]You outwit the troll and it dies from outwitting. You lose 1 luck because yes.[=0x0022=].[=0x000A=]The cdesc is [=0x0022=]Outwit the troll.[=0x0022=].[=0x000A=][=0x000A=]A page-toggle rule for p7:[=0x000A=][=0x0009=]now the luck is luck - 1.[=0x000A=][=0x000A=]p8 is for p5.[=0x000A=][=0x0022=]You flash some serious skills and the troll[=0x0027=]s head explodes, killing it. You lose 1 skill because you are so tired now.[=0x0022=].[=0x000A=]The cdesc is [=0x0022=]Intimidate it with mad skillz.[=0x0022=].[=0x000A=][=0x000A=]A page-toggle rule for p8:[=0x000A=][=0x0009=]now the skill is skill - 1.[=0x000A=][=0x000A=]p9 is a page.[=0x000A=][=0x0022=]OK, you[=0x0027=]ve murdered the troll and now enter a clearing. There[=0x0027=]s a key here.[=0x0022=][=0x000A=]It is flipped to by p6, p7, p8.[=0x000A=][=0x000A=]p10 is for p9.[=0x000A=][=0x0022=]You take the key. Now you can enter the Temple of Fear.[=0x0022=][=0x000A=]The cdesc is [=0x0022=]Take key.[=0x0022=] It turns to p2.[=0x000A=][=0x000A=]A page-toggle rule for p10:[=0x000A=][=0x0009=]now the player carries the bronze key.[=0x000A=][=0x000A=]p11 is for p9.[=0x000A=][=0x0022=]There[=0x0027=]s a totally unrelated trap you stumble onto and die.[=0x0022=][=0x000A=]The cdesc is [=0x0022=]Fall for trap.[=0x0022=].[=0x000A=][=0x000A=]A page-toggle rule for p11:[=0x000A=][=0x0009=]end the story.[=0x000A=][=0x000A=]p12 is a page.[=0x000A=][=0x0022=]You unlock the door and are greeted by a terrible temple full of mysteries, traps, and devious challenges.[=0x0022=][=0x000A=][=0x000A=]A page-toggle rule for p12:[=0x000A=][=0x0009=]end the story saying [=0x0022=]DLC required: Temple of Fear. Now only $10![=0x0022=][=0x000A=][=0x000A=]');
+}
+</script>
+<a href="javascript:pasteCode1010()"><img border=0 src=inform:/doc_images/paste.png></a>
+<p>
+<blockquote><font color="#000080"> &quot;Temple of Fear&quot; by AW Freyr</font></blockquote>
+<p>
+<blockquote><font color="#000080"> Include Hybrid Choices by AW Freyr.</font></blockquote>
+<p>
+<blockquote><font color="#000080"> Chapter - Set Up</font></blockquote>
+<p>
+<blockquote><font color="#000080"> The current stamina is a number that varies. The current stamina is 20.<br> The initial stamina is a number that varies. The initial stamina is 20.</font></blockquote>
+<p>
+<blockquote><font color="#000080"> The skill is a number that varies. The skill is 10.</font></blockquote>
+<p>
+<blockquote><font color="#000080"> The luck is a number that varies. The luck is 10.</font></blockquote>
+<p>
+<blockquote><font color="#000080"> After looking for the first time:<br>&nbsp;&nbsp;&nbsp;&nbsp; now the left hand status line is &quot;Stamina: [current stamina]/[initial stamina] Skill: [skill] Luck: [luck]&quot;;<br>&nbsp;&nbsp;&nbsp;&nbsp; now the right hand status line is &quot;&quot;;<br>&nbsp;&nbsp;&nbsp;&nbsp; switch to cyoa at p1.</font></blockquote>
+<p>
+<blockquote><font color="#000080"> The sword is a thing. It is carried by the player.<br> A meal is a kind of thing. The player is carrying 4 meals.</font></blockquote>
+<p>
+<blockquote><font color="#000080"> The bronze key is a thing.</font></blockquote>
+<p>
+<blockquote><font color="#000080"> Chapter - Temple of Fear</font></blockquote>
+<p>
+<blockquote><font color="#000080"> The game world is a room.</font></blockquote>
+<p>
+<blockquote><font color="#000080"> P1 is a page.<br> &quot;You have just slain the Troll of Bigness, and are ready to make your way into the Temple of Fear. It's just over the bridge to the north.&quot;</font></blockquote>
+<p>
+<blockquote><font color="#000080"> P2 is a page.<br> &quot;[first time]You cross the bridge and find yourself in a huge forest. [only]The door to the Temple of Fear is north. There is a path through the forest to your left.&quot;<br> The cdesc is &quot;Cross the bridge.&quot; It is for p1.</font></blockquote>
+<p>
+<blockquote><font color="#000080"> A page-toggle rule for p2:<br>&nbsp;&nbsp;&nbsp;&nbsp; now the cdesc of p2 is &quot;Head back to the Temple of Fear.&quot;</font></blockquote>
+<p>
+<blockquote><font color="#000080"> p3 is a page.<br> It is flipped to by p2.</font></blockquote>
+<p>
+<blockquote><font color="#000080"> p4 is for p3.<br> &quot;You check the door, but it appears to have a lock or something. Damn.&quot;<br> The cdesc is &quot;Check the door.&quot;. It is a dead-end.</font></blockquote>
+<p>
+<blockquote><font color="#000080"> A page-switch rule for p4:<br>&nbsp;&nbsp;&nbsp;&nbsp; if the player is carrying the bronze key:<br>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; now the current page is p12.</font></blockquote>
+<p>
+<blockquote><font color="#000080"> p5 is for p3. It is one-off.<br> &quot;You travel through the forest and eventually encounter a troll.&quot;<br> The cdesc is &quot;Go to the forest.&quot;.</font></blockquote>
+<p>
+<blockquote><font color="#000080"> A choice-switch rule for p5:<br>&nbsp;&nbsp;&nbsp;&nbsp; if the player carries the bronze key:<br>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; rule fails.</font></blockquote>
+<p>
+<blockquote><font color="#000080"> p6 is for p5.<br> &quot;You slay the troll and lose 4 stamina in the process as it clubs you.&quot;<br> The cdesc is &quot;Kill the troll by stabbing it.&quot;.</font></blockquote>
+<p>
+<blockquote><font color="#000080"> A page-toggle rule for p6:<br>&nbsp;&nbsp;&nbsp;&nbsp; now the current stamina is current stamina - 4.</font></blockquote>
+<p>
+<blockquote><font color="#000080"> p7 is for p5.<br> &quot;You outwit the troll and it dies from outwitting. You lose 1 luck because yes.&quot;.<br> The cdesc is &quot;Outwit the troll.&quot;.</font></blockquote>
+<p>
+<blockquote><font color="#000080"> A page-toggle rule for p7:<br>&nbsp;&nbsp;&nbsp;&nbsp; now the luck is luck - 1.</font></blockquote>
+<p>
+<blockquote><font color="#000080"> p8 is for p5.<br> &quot;You flash some serious skills and the troll's head explodes, killing it. You lose 1 skill because you are so tired now.&quot;.<br> The cdesc is &quot;Intimidate it with mad skillz.&quot;.</font></blockquote>
+<p>
+<blockquote><font color="#000080"> A page-toggle rule for p8:<br>&nbsp;&nbsp;&nbsp;&nbsp; now the skill is skill - 1.</font></blockquote>
+<p>
+<blockquote><font color="#000080"> p9 is a page.<br> &quot;OK, you've murdered the troll and now enter a clearing. There's a key here.&quot;<br> It is flipped to by p6, p7, p8.</font></blockquote>
+<p>
+<blockquote><font color="#000080"> p10 is for p9.<br> &quot;You take the key. Now you can enter the Temple of Fear.&quot;<br> The cdesc is &quot;Take key.&quot; It turns to p2.</font></blockquote>
+<p>
+<blockquote><font color="#000080"> A page-toggle rule for p10:<br>&nbsp;&nbsp;&nbsp;&nbsp; now the player carries the bronze key.</font></blockquote>
+<p>
+<blockquote><font color="#000080"> p11 is for p9.<br> &quot;There's a totally unrelated trap you stumble onto and die.&quot;<br> The cdesc is &quot;Fall for trap.&quot;.</font></blockquote>
+<p>
+<blockquote><font color="#000080"> A page-toggle rule for p11:<br>&nbsp;&nbsp;&nbsp;&nbsp; end the story.</font></blockquote>
+<p>
+<blockquote><font color="#000080"> p12 is a page.<br> &quot;You unlock the door and are greeted by a terrible temple full of mysteries, traps, and devious challenges.&quot;</font></blockquote>
+<p>
+<blockquote><font color="#000080"> A page-toggle rule for p12:<br>&nbsp;&nbsp;&nbsp;&nbsp; end the story saying &quot;DLC required: Temple of Fear. Now only $10!&quot;</font></blockquote>
+<p>
+ Example: *** Colored Rooms - Implementing a fast travel system using a basic implementation of object choices.
+<p>
+ This example is a utilitarian example of how CYOA can fit into a mostly parser game. There are only two page objects, but those two page objects are very powerful indeed and we can use them to bring up a menu of options. Importantly, these options are not preseeded, they are made dynamically. As the player explores the map, there are more places to travel to. This would be very difficult with pages alone.
+<p>
+ In a larger project, you'll want to restrict when the player travels, and what rooms the player can fast travel to. If we have more than 36 options, we'll need to expand the table.
+<p>
+<script language="JavaScript">
+function pasteCode1011(code) {
+    var myProject = project();
+
+    myProject.selectView('source');
+    myProject.pasteCode('[=0x000A=][=0x0022=]Colored Rooms[=0x0022=][=0x000A=][=0x000A=]Include Hybrid Choices by AW Freyr.[=0x000A=][=0x000A=]The white room is a room.[=0x000A=][=0x0022=]There is a path west.[=0x0022=][=0x000A=]West is the black room.[=0x000A=]The description of the black room is [=0x0022=]There are paths west and east.[=0x0022=][=0x000A=][=0x000A=]The yellow room is a room.[=0x000A=]The description of the yellow room is [=0x0022=]There are paths west and east.[=0x0022=][=0x000A=]East is the black room.[=0x000A=]West is the red room.[=0x000A=]The description of the red room is [=0x0022=]There are paths west and east.[=0x0022=][=0x000A=][=0x000A=]The green room is a room.[=0x000A=]The description of the green room is [=0x0022=]There is a path east.[=0x0022=][=0x000A=]East is the red room.[=0x000A=][=0x000A=]Travelling is an action applying to nothing.[=0x000A=]Understand [=0x0022=]travel[=0x0022=] as travelling.[=0x000A=][=0x000A=]Carry out travelling:[=0x000A=][=0x0009=]repeat with X running through visited rooms:[=0x000A=][=0x0009=][=0x0009=]if the player is not in X:[=0x000A=][=0x0009=][=0x0009=][=0x0009=]populate choice list with X;[=0x000A=][=0x0009=]switch to cyoa at ptravel.[=0x000A=][=0x000A=]ptravel is a page. It turns to pcancel.[=0x000A=][=0x0022=]Where do you want to travel?[=0x0022=][=0x000A=][=0x000A=]pcancel is an end-page page.[=0x000A=][=0x0009=]The cdesc is [=0x0022=]Nevermind.[=0x0022=][=0x000A=][=0x000A=]Rule for choice-displaying a room (called N):[=0x000A=][=0x0009=]say [=0x0022=][N].[=0x0022=] in title case.[=0x000A=][=0x000A=]General choose object rule for rooms (called N):[=0x000A=][=0x0009=]move the player to N, without printing a room description.[=0x000A=][=0x000A=]');
+}
+</script>
+<a href="javascript:pasteCode1011()"><img border=0 src=inform:/doc_images/paste.png></a><blockquote><font color="#000080"> &quot;Colored Rooms&quot;</font></blockquote>
+<p>
+<blockquote><font color="#000080"> Include Hybrid Choices by AW Freyr.</font></blockquote>
+<p>
+<blockquote><font color="#000080"> The white room is a room.<br> &quot;There is a path west.&quot;<br> West is the black room.<br> The description of the black room is &quot;There are paths west and east.&quot;</font></blockquote>
+<p>
+<blockquote><font color="#000080"> The yellow room is a room.<br> The description of the yellow room is &quot;There are paths west and east.&quot;<br> East is the black room.<br> West is the red room.<br> The description of the red room is &quot;There are paths west and east.&quot;</font></blockquote>
+<p>
+<blockquote><font color="#000080"> The green room is a room.<br> The description of the green room is &quot;There is a path east.&quot;<br> East is the red room.</font></blockquote>
+<p>
+<blockquote><font color="#000080"> Travelling is an action applying to nothing.<br> Understand &quot;travel&quot; as travelling.</font></blockquote>
+<p>
+<blockquote><font color="#000080"> Carry out travelling:<br>&nbsp;&nbsp;&nbsp;&nbsp; repeat with X running through visited rooms:<br>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; if the player is not in X:<br>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; populate choice list with X;<br>&nbsp;&nbsp;&nbsp;&nbsp; switch to cyoa at ptravel.</font></blockquote>
+<p>
+<blockquote><font color="#000080"> ptravel is a page. It turns to pcancel.<br> &quot;Where do you want to travel?&quot;</font></blockquote>
+<p>
+<blockquote><font color="#000080"> pcancel is an end-page page.<br>&nbsp;&nbsp;&nbsp;&nbsp; The cdesc is &quot;Nevermind.&quot;</font></blockquote>
+<p>
+<blockquote><font color="#000080"> Rule for choice-displaying a room (called N):<br>&nbsp;&nbsp;&nbsp;&nbsp; say &quot;[N].&quot; in title case.</font></blockquote>
+<p>
+<blockquote><font color="#000080"> General choose object rule for rooms (called N):<br>&nbsp;&nbsp;&nbsp;&nbsp; move the player to N, without printing a room description.</font></blockquote>
+<p>
+ Example: **** The Lineup - An advanced implementation of object choices, demonstrating how Hybrid CYOA can be used to make a very powerful interface.
+<p>
+ This example doesn't include parser mode, but it does something that would be very cumbersome and laborious using just pages. The lineup has five people, and through those people the game state is tracked.
+<p>
+ Normally, you'd use pages for every single option. For each person, you'd need to include an examine page, step-forward, step-back, say-line and accuse, and then check and toggle rules for each one of those. Object choices simplifies this by allowing us to directly insert characters as choices. We can then apply rules to each of them directly. This saves us a lot of horribly boring work. It also makes it very easy to add additional characters; we don't need to add any new pages at all, we can just define a new person, their sayline rule, their accuse rule, and be done with it. You might see how this is useful in large projects.
+<p>
+<script language="JavaScript">
+function pasteCode1012(code) {
+    var myProject = project();
+
+    myProject.selectView('source');
+    myProject.pasteCode('[=0x000A=][=0x0022=]The Lineup[=0x0022=][=0x000A=][=0x000A=]Include Hybrid Choices by AW Freyr.[=0x000A=][=0x000A=]The lineup room is a room.[=0x000A=][=0x000A=]Dirty Mosley is a man in the lineup room.[=0x000A=][=0x0009=]The description is [=0x0022=]A sour-eyed man in a big black overcoat, draping him like a blanket. His skin is filthy, flies buzz around his collar.[=0x0022=][=0x000A=]Yellow Manny is a man in the lineup room.[=0x000A=][=0x0009=]The description is [=0x0022=]A twitchy-looking figure with a threadbare t-shirt and jaundiced extremities, constantly scratching himself to ward off the invisible crawling insects.[=0x0022=][=0x000A=]Greedy Macky is a man in the lineup room.[=0x000A=][=0x0009=]The description is [=0x0022=]A hideously ugly man prone to gold-toothed smiles. His head is too small on his broad shoulders, but his mink fur robe is laden by jewelry.[=0x0022=][=0x000A=]Psychic May is a woman in the lineup room.[=0x000A=][=0x0009=]The description is [=0x0022=]A wizened crone swathed in lilac scarves, her long-lashed lids are shut pensively and her long fingers levitate a crystal orb from the tips of her fingers.[=0x0022=][=0x000A=]Racist Marty is a man in the lineup room.[=0x000A=][=0x0009=]The description is [=0x0022=]A grossly fat man whose lips quiver with suppressed slurs. He wears a grease-stained shirt over his stretched belly that reads: [=0x0027=]I Hate Fijians.[=0x0027=][=0x0022=].[=0x000A=][=0x000A=]A person can be stepped-forward or stepped-back. A person is usually stepped-back.[=0x000A=][=0x000A=]Instead of looking for the first time:[=0x000A=][=0x0009=]say [=0x0022=]One of the people in this room committed a terrible crime against you, and now it[=0x0027=]s time to point the finger at them. Who will you accuse?[=0x0022=];[=0x000A=][=0x0009=]switch to cyoa at pmenu.[=0x000A=][=0x000A=]pmenu is a page.[=0x000A=][=0x0009=]The cdesc is [=0x0022=]Choose something else.[=0x0022=][=0x000A=][=0x000A=]Choice-priority for pmenu:[=0x000A=][=0x0009=]rule succeeds with result 200.[=0x000A=][=0x000A=]section - examining[=0x000A=][=0x000A=]The lineupex rules is an object based rulebook.[=0x000A=][=0x000A=]exp is a page. It is turned to by pmenu. It turns to pmenu.[=0x000A=]The cdesc is [=0x0022=]Examine suspects.[=0x0022=][=0x000A=][=0x000A=]A page-toggle rule for exp:[=0x000A=][=0x0009=]populate choice list with visible people who are not yourself;[=0x000A=][=0x0009=]now the object-choice-handler is the lineupex rules.[=0x000A=][=0x000A=]Lineupex for people (called the individual):[=0x000A=][=0x0009=]say [=0x0022=][The description of the individual][paragraph break][=0x0022=];[=0x000A=][=0x0009=]populate choice list with visible people who are not yourself;[=0x000A=][=0x0009=]now the current page is exp.[=0x000A=][=0x000A=]section - step forward[=0x000A=][=0x000A=]The stepforward rules is an object based rulebook.[=0x000A=][=0x000A=]pstepforward is a page. It is turned to by pmenu. It turns to pmenu.[=0x000A=]The cdesc is [=0x0022=]Ask someone to step forward.[=0x0022=][=0x000A=][=0x000A=]A choice-switch rule for pstepforward:[=0x000A=][=0x0009=]repeat with X running through visible people:[=0x000A=][=0x0009=][=0x0009=]if X is yourself:[=0x000A=][=0x0009=][=0x0009=][=0x0009=]next;[=0x000A=][=0x0009=][=0x0009=]if X is stepped-back:[=0x000A=][=0x0009=][=0x0009=][=0x0009=]rule succeeds;[=0x000A=][=0x0009=]rule fails.[=0x000A=][=0x000A=]A page-toggle rule for pstepforward:[=0x000A=][=0x0009=]repeat with X running through visible people:[=0x000A=][=0x0009=][=0x0009=]if X is yourself:[=0x000A=][=0x0009=][=0x0009=][=0x0009=]next;[=0x000A=][=0x0009=][=0x0009=]if X is stepped-back:[=0x000A=][=0x0009=][=0x0009=][=0x0009=]populate choice list with X;[=0x000A=][=0x0009=]now the object-choice-handler is stepforward rules.[=0x000A=][=0x000A=]stepforward for people (called the individual):[=0x000A=][=0x0009=]say [=0x0022=][The individual] steps forward.[=0x0022=];[=0x000A=][=0x0009=]now the individual is stepped-forward;[=0x000A=][=0x0009=]repeat with X running through visible people:[=0x000A=][=0x0009=][=0x0009=]if X is yourself:[=0x000A=][=0x0009=][=0x0009=][=0x0009=]next;[=0x000A=][=0x0009=][=0x0009=]if X is stepped-back:[=0x000A=][=0x0009=][=0x0009=][=0x0009=]populate choice list with X;[=0x000A=][=0x0009=]now the current page is pstepforward.[=0x000A=][=0x000A=]section - step back[=0x000A=][=0x000A=]The stepback rules is an object based rulebook.[=0x000A=][=0x000A=]pstepback is a page. It is turned to by pmenu. It turns to pmenu.[=0x000A=]The cdesc is [=0x0022=]Ask someone to step back.[=0x0022=][=0x000A=][=0x000A=]A choice-switch rule for pstepback:[=0x000A=][=0x0009=]repeat with X running through visible people:[=0x000A=][=0x0009=][=0x0009=]if X is yourself:[=0x000A=][=0x0009=][=0x0009=][=0x0009=]next;[=0x000A=][=0x0009=][=0x0009=]if X is stepped-forward:[=0x000A=][=0x0009=][=0x0009=][=0x0009=]rule succeeds;[=0x000A=][=0x0009=]rule fails.[=0x000A=][=0x000A=]A page-toggle rule for pstepback:[=0x000A=][=0x0009=]repeat with X running through visible people:[=0x000A=][=0x0009=][=0x0009=]if X is yourself:[=0x000A=][=0x0009=][=0x0009=][=0x0009=]next;[=0x000A=][=0x0009=][=0x0009=]if X is stepped-forward:[=0x000A=][=0x0009=][=0x0009=][=0x0009=]populate choice list with X;[=0x000A=][=0x0009=]now the object-choice-handler is stepback rules.[=0x000A=][=0x000A=]stepback for people (called the individual):[=0x000A=][=0x0009=]say [=0x0022=][The individual] steps back.[=0x0022=];[=0x000A=][=0x0009=]now the individual is stepped-back;[=0x000A=][=0x0009=]repeat with X running through visible people:[=0x000A=][=0x0009=][=0x0009=]if X is yourself:[=0x000A=][=0x0009=][=0x0009=][=0x0009=]next;[=0x000A=][=0x0009=][=0x0009=]if X is stepped-forward:[=0x000A=][=0x0009=][=0x0009=][=0x0009=]populate choice list with X;[=0x000A=][=0x0009=]now the current page is pstepback.[=0x000A=][=0x000A=]section - say a line[=0x000A=][=0x000A=]The sayline rulebook is an object based rulebook.[=0x000A=][=0x000A=]psayline is a page. It is turned to by pmenu. It turns to pmenu.[=0x000A=]The cdesc is [=0x0022=]Ask someone to say a line.[=0x0022=][=0x000A=][=0x000A=]A page-toggle rule for psayline:[=0x000A=][=0x0009=]populate choice list with visible people who are not yourself;[=0x000A=][=0x0009=]now the object-choice-handler is the sayline rules.[=0x000A=][=0x000A=]sayline for Dirty Mosley:[=0x000A=][=0x0009=]say [=0x0022=]Dirty Mosley gives you a once-over with bugged-out eyes. [=0x0027=][italic type]Wanna hug?[roman type][=0x0027=][paragraph break][=0x0022=].[=0x000A=][=0x000A=]sayline for Yellow Manny:[=0x000A=][=0x0009=]say [=0x0022=]Yellow Manny scratches himself desperately. [=0x0027=]You have any yeller M[=0x0026=]Ms? I gots to get that fine yeller![=0x0027=][=0x0022=].[=0x000A=][=0x000A=]sayline for Greedy Macky:[=0x000A=][=0x0009=]say [=0x0022=]Greedy Macky wiggles an eyebrow at you. [=0x0027=]Want to refinance your mortgage at low, low interest rates?[=0x0027=][=0x0022=].[=0x000A=][=0x000A=]sayline for Psychic May:[=0x000A=][=0x0009=]say [=0x0022=]She intones prophetically: [=0x0027=][italic type]Give me your wallet, or I[=0x0027=]ll cut you!![roman type][=0x0027=][paragraph break][=0x0022=].[=0x000A=][=0x000A=]sayline for Racist Marty:[=0x000A=][=0x0009=]say [=0x0022=]He drawls, [=0x0027=]You look like one of dose Feejuns. Why don[=0x0027=]t you take you and your coconut bras somewhere else?[=0x0027=][=0x0022=].[=0x000A=][=0x000A=]sayline rule:[=0x000A=][=0x0009=]populate choice list with visible people who are not yourself;[=0x000A=][=0x0009=]now the current page is psayline.[=0x000A=][=0x000A=]section - accuse[=0x000A=][=0x000A=]The accuse rules are an object based rulebook.[=0x000A=][=0x000A=]paccuse is a page. It is turned to by pmenu. It turns to pmenu.[=0x000A=]The cdesc is [=0x0022=]Accuse someone.[=0x0022=][=0x000A=][=0x000A=]A page-toggle rule for paccuse:[=0x000A=][=0x0009=]populate choice list with visible people who are not yourself;[=0x000A=][=0x0009=]now the object-choice-handler is the accuse rulebook.[=0x000A=][=0x000A=]accuse Dirty Mosley:[=0x000A=][=0x0009=]say [=0x0022=][=0x0027=]What? No! I had so much to not live for![=0x0027=][=0x000A=][=0x000A=]He is executed the next day. Method of execution: devoured by rabid bedbugs.[=0x0022=].[=0x000A=][=0x000A=]accuse Yellow Manny:[=0x000A=][=0x0009=]say [=0x0022=][=0x0027=]I demand my last meal! I want a olympic swimmin[[=0x0027=]] pool of yeller M[=0x0026=]Ms![=0x0027=][=0x000A=][=0x000A=]He is executed the next day. Method of execution: clinically induced liver failure.[=0x0022=].[=0x000A=][=0x000A=]accuse Greedy Macky:[=0x000A=][=0x0009=]say [=0x0022=][=0x0027=]Tell my bank statements I loved them.[=0x0027=][=0x000A=][=0x000A=]He is executed the next day. Method of execution: bones ground into cement.[=0x0022=].[=0x000A=][=0x000A=]accuse Psychic May:[=0x000A=][=0x0009=]say [=0x0022=][=0x0027=]I [italic type]KNEW[roman type] you would accuse me![=0x0027=][=0x000A=][=0x000A=]She is executed the next day. Method of execution: week-long Twilight marathon.[=0x0022=].[=0x000A=][=0x000A=]accuse Racist Marty:[=0x000A=][=0x0009=]say [=0x0022=][=0x0027=]As long as I don[=0x0027=]t have to share this cruel world with those horrible Feejuns![=0x0027=][=0x000A=][=0x000A=]He is executed the next day. Method of execution: buried alive in Samoa.[=0x0022=].[=0x000A=][=0x000A=]Last accuse rule:[=0x000A=][=0x0009=]now the current page is pend;[=0x000A=][=0x0009=]end the story.[=0x000A=][=0x000A=]pend is a page.[=0x000A=][=0x000A=]');
+}
+</script>
+<a href="javascript:pasteCode1012()"><img border=0 src=inform:/doc_images/paste.png></a><blockquote><font color="#000080"> &quot;The Lineup&quot;</font></blockquote>
+<p>
+<blockquote><font color="#000080"> Include Hybrid Choices by AW Freyr.</font></blockquote>
+<p>
+<blockquote><font color="#000080"> The lineup room is a room.</font></blockquote>
+<p>
+<blockquote><font color="#000080"> Dirty Mosley is a man in the lineup room.<br>&nbsp;&nbsp;&nbsp;&nbsp; The description is &quot;A sour-eyed man in a big black overcoat, draping him like a blanket. His skin is filthy, flies buzz around his collar.&quot;<br> Yellow Manny is a man in the lineup room.<br>&nbsp;&nbsp;&nbsp;&nbsp; The description is &quot;A twitchy-looking figure with a threadbare t-shirt and jaundiced extremities, constantly scratching himself to ward off the invisible crawling insects.&quot;<br> Greedy Macky is a man in the lineup room.<br>&nbsp;&nbsp;&nbsp;&nbsp; The description is &quot;A hideously ugly man prone to gold-toothed smiles. His head is too small on his broad shoulders, but his mink fur robe is laden by jewelry.&quot;<br> Psychic May is a woman in the lineup room.<br>&nbsp;&nbsp;&nbsp;&nbsp; The description is &quot;A wizened crone swathed in lilac scarves, her long-lashed lids are shut pensively and her long fingers levitate a crystal orb from the tips of her fingers.&quot;<br> Racist Marty is a man in the lineup room.<br>&nbsp;&nbsp;&nbsp;&nbsp; The description is &quot;A grossly fat man whose lips quiver with suppressed slurs. He wears a grease-stained shirt over his stretched belly that reads: 'I Hate Fijians.'&quot;.</font></blockquote>
+<p>
+<blockquote><font color="#000080"> A person can be stepped-forward or stepped-back. A person is usually stepped-back.</font></blockquote>
+<p>
+<blockquote><font color="#000080"> Instead of looking for the first time:<br>&nbsp;&nbsp;&nbsp;&nbsp; say &quot;One of the people in this room committed a terrible crime against you, and now it's time to point the finger at them. Who will you accuse?&quot;;<br>&nbsp;&nbsp;&nbsp;&nbsp; switch to cyoa at pmenu.</font></blockquote>
+<p>
+<blockquote><font color="#000080"> pmenu is a page.<br>&nbsp;&nbsp;&nbsp;&nbsp; The cdesc is &quot;Choose something else.&quot;</font></blockquote>
+<p>
+<blockquote><font color="#000080"> Choice-priority for pmenu:<br>&nbsp;&nbsp;&nbsp;&nbsp; rule succeeds with result 200.</font></blockquote>
+<p>
+<blockquote><font color="#000080"> section - examining</font></blockquote>
+<p>
+<blockquote><font color="#000080"> The lineupex rules is an object based rulebook.</font></blockquote>
+<p>
+<blockquote><font color="#000080"> exp is a page. It is turned to by pmenu. It turns to pmenu.<br> The cdesc is &quot;Examine suspects.&quot;</font></blockquote>
+<p>
+<blockquote><font color="#000080"> A page-toggle rule for exp:<br>&nbsp;&nbsp;&nbsp;&nbsp; populate choice list with visible people who are not yourself;<br>&nbsp;&nbsp;&nbsp;&nbsp; now the object-choice-handler is the lineupex rules.</font></blockquote>
+<p>
+<blockquote><font color="#000080"> Lineupex for people (called the individual):<br>&nbsp;&nbsp;&nbsp;&nbsp; say &quot;[The description of the individual][paragraph break]&quot;;<br>&nbsp;&nbsp;&nbsp;&nbsp; populate choice list with visible people who are not yourself;<br>&nbsp;&nbsp;&nbsp;&nbsp; now the current page is exp.</font></blockquote>
+<p>
+<blockquote><font color="#000080"> section - step forward</font></blockquote>
+<p>
+<blockquote><font color="#000080"> The stepforward rules is an object based rulebook.</font></blockquote>
+<p>
+<blockquote><font color="#000080"> pstepforward is a page. It is turned to by pmenu. It turns to pmenu.<br> The cdesc is &quot;Ask someone to step forward.&quot;</font></blockquote>
+<p>
+<blockquote><font color="#000080"> A choice-switch rule for pstepforward:<br>&nbsp;&nbsp;&nbsp;&nbsp; repeat with X running through visible people:<br>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; if X is yourself:<br>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; next;<br>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; if X is stepped-back:<br>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; rule succeeds;<br>&nbsp;&nbsp;&nbsp;&nbsp; rule fails.</font></blockquote>
+<p>
+<blockquote><font color="#000080"> A page-toggle rule for pstepforward:<br>&nbsp;&nbsp;&nbsp;&nbsp; repeat with X running through visible people:<br>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; if X is yourself:<br>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; next;<br>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; if X is stepped-back:<br>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; populate choice list with X;<br>&nbsp;&nbsp;&nbsp;&nbsp; now the object-choice-handler is stepforward rules.</font></blockquote>
+<p>
+<blockquote><font color="#000080"> stepforward for people (called the individual):<br>&nbsp;&nbsp;&nbsp;&nbsp; say &quot;[The individual] steps forward.&quot;;<br>&nbsp;&nbsp;&nbsp;&nbsp; now the individual is stepped-forward;<br>&nbsp;&nbsp;&nbsp;&nbsp; repeat with X running through visible people:<br>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; if X is yourself:<br>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; next;<br>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; if X is stepped-back:<br>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; populate choice list with X;<br>&nbsp;&nbsp;&nbsp;&nbsp; now the current page is pstepforward.</font></blockquote>
+<p>
+<blockquote><font color="#000080"> section - step back</font></blockquote>
+<p>
+<blockquote><font color="#000080"> The stepback rules is an object based rulebook.</font></blockquote>
+<p>
+<blockquote><font color="#000080"> pstepback is a page. It is turned to by pmenu. It turns to pmenu.<br> The cdesc is &quot;Ask someone to step back.&quot;</font></blockquote>
+<p>
+<blockquote><font color="#000080"> A choice-switch rule for pstepback:<br>&nbsp;&nbsp;&nbsp;&nbsp; repeat with X running through visible people:<br>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; if X is yourself:<br>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; next;<br>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; if X is stepped-forward:<br>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; rule succeeds;<br>&nbsp;&nbsp;&nbsp;&nbsp; rule fails.</font></blockquote>
+<p>
+<blockquote><font color="#000080"> A page-toggle rule for pstepback:<br>&nbsp;&nbsp;&nbsp;&nbsp; repeat with X running through visible people:<br>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; if X is yourself:<br>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; next;<br>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; if X is stepped-forward:<br>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; populate choice list with X;<br>&nbsp;&nbsp;&nbsp;&nbsp; now the object-choice-handler is stepback rules.</font></blockquote>
+<p>
+<blockquote><font color="#000080"> stepback for people (called the individual):<br>&nbsp;&nbsp;&nbsp;&nbsp; say &quot;[The individual] steps back.&quot;;<br>&nbsp;&nbsp;&nbsp;&nbsp; now the individual is stepped-back;<br>&nbsp;&nbsp;&nbsp;&nbsp; repeat with X running through visible people:<br>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; if X is yourself:<br>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; next;<br>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; if X is stepped-forward:<br>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; populate choice list with X;<br>&nbsp;&nbsp;&nbsp;&nbsp; now the current page is pstepback.</font></blockquote>
+<p>
+<blockquote><font color="#000080"> section - say a line</font></blockquote>
+<p>
+<blockquote><font color="#000080"> The sayline rulebook is an object based rulebook.</font></blockquote>
+<p>
+<blockquote><font color="#000080"> psayline is a page. It is turned to by pmenu. It turns to pmenu.<br> The cdesc is &quot;Ask someone to say a line.&quot;</font></blockquote>
+<p>
+<blockquote><font color="#000080"> A page-toggle rule for psayline:<br>&nbsp;&nbsp;&nbsp;&nbsp; populate choice list with visible people who are not yourself;<br>&nbsp;&nbsp;&nbsp;&nbsp; now the object-choice-handler is the sayline rules.</font></blockquote>
+<p>
+<blockquote><font color="#000080"> sayline for Dirty Mosley:<br>&nbsp;&nbsp;&nbsp;&nbsp; say &quot;Dirty Mosley gives you a once-over with bugged-out eyes. '[italic type]Wanna hug?[roman type]'[paragraph break]&quot;.</font></blockquote>
+<p>
+<blockquote><font color="#000080"> sayline for Yellow Manny:<br>&nbsp;&nbsp;&nbsp;&nbsp; say &quot;Yellow Manny scratches himself desperately. 'You have any yeller M&amp;Ms? I gots to get that fine yeller!'&quot;.</font></blockquote>
+<p>
+<blockquote><font color="#000080"> sayline for Greedy Macky:<br>&nbsp;&nbsp;&nbsp;&nbsp; say &quot;Greedy Macky wiggles an eyebrow at you. 'Want to refinance your mortgage at low, low interest rates?'&quot;.</font></blockquote>
+<p>
+<blockquote><font color="#000080"> sayline for Psychic May:<br>&nbsp;&nbsp;&nbsp;&nbsp; say &quot;She intones prophetically: '[italic type]Give me your wallet, or I'll cut you!![roman type]'[paragraph break]&quot;.</font></blockquote>
+<p>
+<blockquote><font color="#000080"> sayline for Racist Marty:<br>&nbsp;&nbsp;&nbsp;&nbsp; say &quot;He drawls, 'You look like one of dose Feejuns. Why don't you take you and your coconut bras somewhere else?'&quot;.</font></blockquote>
+<p>
+<blockquote><font color="#000080"> sayline rule:<br>&nbsp;&nbsp;&nbsp;&nbsp; populate choice list with visible people who are not yourself;<br>&nbsp;&nbsp;&nbsp;&nbsp; now the current page is psayline.</font></blockquote>
+<p>
+<blockquote><font color="#000080"> section - accuse</font></blockquote>
+<p>
+<blockquote><font color="#000080"> The accuse rules are an object based rulebook.</font></blockquote>
+<p>
+<blockquote><font color="#000080"> paccuse is a page. It is turned to by pmenu. It turns to pmenu.<br> The cdesc is &quot;Accuse someone.&quot;</font></blockquote>
+<p>
+<blockquote><font color="#000080"> A page-toggle rule for paccuse:<br>&nbsp;&nbsp;&nbsp;&nbsp; populate choice list with visible people who are not yourself;<br>&nbsp;&nbsp;&nbsp;&nbsp; now the object-choice-handler is the accuse rulebook.</font></blockquote>
+<p>
+<blockquote><font color="#000080"> accuse Dirty Mosley:<br>&nbsp;&nbsp;&nbsp;&nbsp; say &quot;'What? No! I had so much to not live for!'<br><br>He is executed the next day. Method of execution: devoured by rabid bedbugs.&quot;.</font></blockquote>
+<p>
+<blockquote><font color="#000080"> accuse Yellow Manny:<br>&nbsp;&nbsp;&nbsp;&nbsp; say &quot;'I demand my last meal! I want a olympic swimmin['] pool of yeller M&amp;Ms!'<br><br>He is executed the next day. Method of execution: clinically induced liver failure.&quot;.</font></blockquote>
+<p>
+<blockquote><font color="#000080"> accuse Greedy Macky:<br>&nbsp;&nbsp;&nbsp;&nbsp; say &quot;'Tell my bank statements I loved them.'<br><br>He is executed the next day. Method of execution: bones ground into cement.&quot;.</font></blockquote>
+<p>
+<blockquote><font color="#000080"> accuse Psychic May:<br>&nbsp;&nbsp;&nbsp;&nbsp; say &quot;'I [italic type]KNEW[roman type] you would accuse me!'<br><br>She is executed the next day. Method of execution: week-long Twilight marathon.&quot;.</font></blockquote>
+<p>
+<blockquote><font color="#000080"> accuse Racist Marty:<br>&nbsp;&nbsp;&nbsp;&nbsp; say &quot;'As long as I don't have to share this cruel world with those horrible Feejuns!'<br><br>He is executed the next day. Method of execution: buried alive in Samoa.&quot;.</font></blockquote>
+<p>
+<blockquote><font color="#000080"> Last accuse rule:<br>&nbsp;&nbsp;&nbsp;&nbsp; now the current page is pend;<br>&nbsp;&nbsp;&nbsp;&nbsp; end the story.</font></blockquote>
+<p>
+<blockquote><font color="#000080"> pend is a page.</font></blockquote>
+<p>
+
+<p>
+<p></body></html>

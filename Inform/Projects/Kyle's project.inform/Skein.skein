@@ -1,0 +1,90 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<Skein rootNode="node-47">
+  <generator>Windows Inform 7 6M62</generator>
+  <activeNode nodeId="node-56"/>
+  <item nodeId="node-47">
+    <command xml:space="preserve">Kyle's project</command>
+    <result xml:space="preserve">Lucy's Mood&#x000A;An Interactive Fiction by Patrick Kelly&#x000A;Release 1 / Serial number 180219 / Inform 7 build 6M62 (I6/v6.33 lib 6/12N) SD&#x000A;&#x000A;Green Room&#x000A;You are backstage before the big show. You're a rocker but are still intrigued by the Grand Piano in the corner.&#x000A;&#x000A;You can see an annoying groupie, a book, a guitar, a bass, a piano and a drum set here.&#x000A;&#x000A;&gt;</result>
+    <commentary xml:space="preserve"></commentary>
+    <changed>YES</changed>
+    <children>
+      <child nodeId="node-48"/>
+      <child nodeId="node-52"/>
+    </children>
+  </item>
+  <item nodeId="node-48">
+    <command xml:space="preserve">open door</command>
+    <result xml:space="preserve">You open the front door.&#x000A;&#x000A;&gt;</result>
+    <commentary xml:space="preserve"></commentary>
+    <changed>NO</changed>
+    <children>
+      <child nodeId="node-49"/>
+    </children>
+  </item>
+  <item nodeId="node-49">
+    <command xml:space="preserve">n</command>
+    <result xml:space="preserve">entryway&#x000A;You stand on a long burgundy rug in the entryway. The wide corridor before you is modestly lit by shaded wall sconces on dark wood-panel walls. To your right is a narrow console table with a wicker basket atop. From where you stand, you can see piled phones in the basket and a sign above that reads "For guest privacy, please leave electronic devices here.&#x000A;&#x000A;You can see a front door here.&#x000A;&#x000A;&gt;</result>
+    <commentary xml:space="preserve"></commentary>
+    <changed>NO</changed>
+    <children>
+      <child nodeId="node-50"/>
+    </children>
+  </item>
+  <item nodeId="node-50">
+    <command xml:space="preserve">i</command>
+    <result xml:space="preserve">You are carrying:&#x000A;  a house key&#x000A;  a phone&#x000A;&#x000A;&gt;</result>
+    <commentary xml:space="preserve"></commentary>
+    <changed>NO</changed>
+    <children>
+      <child nodeId="node-51"/>
+    </children>
+  </item>
+  <item nodeId="node-51">
+    <command xml:space="preserve">put phone in basket</command>
+    <result xml:space="preserve">*** You power off your phone and tuck it into the pile.&#x000A;&#x000A;You hear your ragged breathing, your shuddering heart, loud as a furnace. You draw a cleansing breath, then another, dimming the sound of you until you catch the sounds of laughter and chatter in the lounge to the north. The night is beginning and anything can happen.&#x000A;&#x000A;Finally you step forward. This is the last thing you remember. You'll soon wake up.... ***&#x000A;&#x000A;&#x000A;&#x000A;Would you like to RESTART, RESTORE a saved game, QUIT or UNDO the last command?&#x000A;&gt;</result>
+    <commentary xml:space="preserve"></commentary>
+    <changed>NO</changed>
+  </item>
+  <item nodeId="node-52">
+    <command xml:space="preserve">x groupie</command>
+    <result xml:space="preserve">Sweet Lucy was a dancer, but none of us could chance her, because she was a samurai. Another city, another groupie... Man! They never leave...&#x000A;&#x000A;&gt;</result>
+    <commentary xml:space="preserve"></commentary>
+    <changed>NO</changed>
+    <children>
+      <child nodeId="node-53"/>
+    </children>
+  </item>
+  <item nodeId="node-53">
+    <command xml:space="preserve">x book</command>
+    <result xml:space="preserve">It's your old chemistry book. How boring... Why do you still like that thing??&#x000A;&#x000A;&gt;</result>
+    <commentary xml:space="preserve"></commentary>
+    <changed>NO</changed>
+    <children>
+      <child nodeId="node-54"/>
+    </children>
+  </item>
+  <item nodeId="node-54">
+    <command xml:space="preserve">x guitar</command>
+    <result xml:space="preserve">There sits your 1961 Olympic White Stratocaster. You got it when you were 18. You've made tons of money, but this is still your ideal writing and performing guitar.&#x000A;&#x000A;&gt;</result>
+    <commentary xml:space="preserve"></commentary>
+    <changed>NO</changed>
+    <children>
+      <child nodeId="node-55"/>
+    </children>
+  </item>
+  <item nodeId="node-55">
+    <command xml:space="preserve">x bass</command>
+    <result xml:space="preserve">Check out that "74 sunbust jazz bass. That thing sounds monstrous. Your neighbor's father gave it to the band as a "thank you" when you saved his dog from drowning.&#x000A;&#x000A;&gt;</result>
+    <commentary xml:space="preserve"></commentary>
+    <changed>NO</changed>
+    <children>
+      <child nodeId="node-56"/>
+    </children>
+  </item>
+  <item nodeId="node-56">
+    <command xml:space="preserve">play drums</command>
+    <result xml:space="preserve">*** Thank God she doesn't like noise, and that you are clearly illiterate on the drums. She left and now you've got some peace and quiet before the show. Now kick back, have a few drinks and get ready to roll. ***&#x000A;&#x000A;&#x000A;&#x000A;Would you like to RESTART, RESTORE a saved game, QUIT or UNDO the last command?&#x000A;&gt;</result>
+    <commentary xml:space="preserve"></commentary>
+    <changed>NO</changed>
+  </item>
+</Skein>

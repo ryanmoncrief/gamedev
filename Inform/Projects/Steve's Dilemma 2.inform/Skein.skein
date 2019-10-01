@@ -1,0 +1,225 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<Skein rootNode="node-1">
+  <generator>Windows Inform 7 6M62</generator>
+  <activeNode nodeId="node-48"/>
+  <item nodeId="node-1">
+    <command xml:space="preserve">Steve's Dilemma 2</command>
+    <result xml:space="preserve">You wake up in your bed, Steve, in the middle of the night. You remember that there is something you absolutely need to write down in your Handy Dandy Notebook for a mystery that you're working on. Time to get up and go find it.&#x000A;&#x000A;Steve's Dilemma 2&#x000A;An Interactive Fiction by Rayn&#x000A;Release 1 / Serial number 180207 / Inform 7 build 6M62 (I6/v6.33 lib 6/12N) SD&#x000A;&#x000A;Bedroom&#x000A;Your bedroom. Somedays you lie here and look at the carpet. It makes you dizzy. You notice a painting.&#x000A;&#x000A;You can see a flashlight here.&#x000A;&#x000A;&gt;</result>
+    <commentary xml:space="preserve"></commentary>
+    <changed>YES</changed>
+    <children>
+      <child nodeId="node-2"/>
+    </children>
+  </item>
+  <item nodeId="node-2">
+    <command xml:space="preserve">take flashlight</command>
+    <result xml:space="preserve">Taken.&#x000A;&#x000A;&gt;</result>
+    <commentary xml:space="preserve"></commentary>
+    <changed>NO</changed>
+    <children>
+      <child nodeId="node-3"/>
+      <child nodeId="node-38"/>
+    </children>
+  </item>
+  <item nodeId="node-3">
+    <command xml:space="preserve">turn on flashlight</command>
+    <result xml:space="preserve">You switch the flashlight on.&#x000A;&#x000A;&gt;</result>
+    <commentary xml:space="preserve"></commentary>
+    <changed>NO</changed>
+    <children>
+      <child nodeId="node-4"/>
+    </children>
+  </item>
+  <item nodeId="node-4">
+    <command xml:space="preserve">turn off flashlight</command>
+    <result xml:space="preserve">You switch the flashlight off.&#x000A;&#x000A;&gt;</result>
+    <commentary xml:space="preserve"></commentary>
+    <changed>NO</changed>
+    <children>
+      <child nodeId="node-5"/>
+    </children>
+  </item>
+  <item nodeId="node-5">
+    <command xml:space="preserve">x painting</command>
+    <result xml:space="preserve">The painting is an abstract portrait of Blue, going SOUTH to the Kitchen.&#x000A;&#x000A;&gt;</result>
+    <commentary xml:space="preserve"></commentary>
+    <changed>NO</changed>
+    <children>
+      <child nodeId="node-6"/>
+    </children>
+  </item>
+  <item nodeId="node-6">
+    <command xml:space="preserve">s</command>
+    <result xml:space="preserve">Kitchen&#x000A;The kitchen is a mess. You can't remember the last time you cleaned this place. Shame on you! Your dog Blue is here. Your Living Room is east of here.&#x000A;&#x000A;You can see Blue and a glass jar (closed) (in which is a Crystal Key) here.&#x000A;&#x000A;&gt;</result>
+    <commentary xml:space="preserve"></commentary>
+    <changed>NO</changed>
+    <children>
+      <child nodeId="node-7"/>
+    </children>
+  </item>
+  <item nodeId="node-7">
+    <command xml:space="preserve">open glass jar</command>
+    <result xml:space="preserve">You open the glass jar.&#x000A;&#x000A;&gt;</result>
+    <commentary xml:space="preserve"></commentary>
+    <changed>NO</changed>
+    <children>
+      <child nodeId="node-8"/>
+    </children>
+  </item>
+  <item nodeId="node-8">
+    <command xml:space="preserve">take Crystal Key</command>
+    <result xml:space="preserve">Taken.&#x000A;&#x000A;&gt;</result>
+    <commentary xml:space="preserve"></commentary>
+    <changed>NO</changed>
+    <children>
+      <child nodeId="node-9"/>
+    </children>
+  </item>
+  <item nodeId="node-9">
+    <command xml:space="preserve">e</command>
+    <result xml:space="preserve">Living Room&#x000A;You can see a Thinking Chair and a Side Table here.&#x000A;&#x000A;&gt;</result>
+    <commentary xml:space="preserve"></commentary>
+    <changed>NO</changed>
+    <children>
+      <child nodeId="node-10"/>
+    </children>
+  </item>
+  <item nodeId="node-10">
+    <command xml:space="preserve">x side table</command>
+    <result xml:space="preserve">Your trusted Side Table! You two have solved many a mystery together! Side Table has a drawer where you usually keep your handy dandy notebook.&#x000A;&#x000A;&gt;</result>
+    <commentary xml:space="preserve"></commentary>
+    <changed>NO</changed>
+    <children>
+      <child nodeId="node-11"/>
+    </children>
+  </item>
+  <item nodeId="node-11">
+    <command xml:space="preserve">open drawer</command>
+    <result xml:space="preserve">It seems to be locked.&#x000A;&#x000A;&gt;</result>
+    <commentary xml:space="preserve"></commentary>
+    <changed>NO</changed>
+    <children>
+      <child nodeId="node-12"/>
+    </children>
+  </item>
+  <item nodeId="node-12">
+    <command xml:space="preserve">unlock drawer with Crystal Key</command>
+    <result xml:space="preserve">You unlock the drawer.&#x000A;&#x000A;&gt;</result>
+    <commentary xml:space="preserve"></commentary>
+    <changed>NO</changed>
+    <children>
+      <child nodeId="node-13"/>
+    </children>
+  </item>
+  <item nodeId="node-13">
+    <command xml:space="preserve">open drawer</command>
+    <result xml:space="preserve">Aha! your trusty handy dandy notebook!&#x000A;&#x000A;&gt;</result>
+    <commentary xml:space="preserve"></commentary>
+    <changed>NO</changed>
+    <children>
+      <child nodeId="node-14"/>
+    </children>
+  </item>
+  <item nodeId="node-14">
+    <command xml:space="preserve">take handy dandy notebook</command>
+    <result xml:space="preserve">*** You found the notebook! Congratulations! A winner is you! ***&#x000A;&#x000A;&#x000A;&#x000A;Would you like to RESTART, RESTORE a saved game, QUIT or UNDO the last command?&#x000A;&gt;</result>
+    <commentary xml:space="preserve"></commentary>
+    <changed>NO</changed>
+  </item>
+  <item nodeId="node-38">
+    <command xml:space="preserve">switch on flashlight</command>
+    <result xml:space="preserve">You switch the flashlight on.&#x000A;&#x000A;&gt;</result>
+    <commentary xml:space="preserve"></commentary>
+    <changed>NO</changed>
+    <children>
+      <child nodeId="node-39"/>
+    </children>
+  </item>
+  <item nodeId="node-39">
+    <command xml:space="preserve">x painting</command>
+    <result xml:space="preserve">The painting is an abstract portrait of Blue, going SOUTH to the Kitchen.&#x000A;&#x000A;&gt;</result>
+    <commentary xml:space="preserve"></commentary>
+    <changed>NO</changed>
+    <children>
+      <child nodeId="node-40"/>
+    </children>
+  </item>
+  <item nodeId="node-40">
+    <command xml:space="preserve">s</command>
+    <result xml:space="preserve">(first opening the Bedroom Door)&#x000A;&#x000A;Kitchen&#x000A;The kitchen is a mess. You can't remember the last time you cleaned this place. Shame on you! Your dog Blue is here. Your Living Room is east of here.&#x000A;&#x000A;You can see Blue and a glass jar (closed) (in which is a Crystal Key) here.&#x000A;&#x000A;[Your score has just gone up by five points.]&#x000A;&#x000A;&gt;</result>
+    <commentary xml:space="preserve"></commentary>
+    <changed>NO</changed>
+    <children>
+      <child nodeId="node-41"/>
+    </children>
+  </item>
+  <item nodeId="node-41">
+    <command xml:space="preserve">open glass jar</command>
+    <result xml:space="preserve">You open the glass jar.&#x000A;&#x000A;&gt;</result>
+    <commentary xml:space="preserve"></commentary>
+    <changed>NO</changed>
+    <children>
+      <child nodeId="node-42"/>
+    </children>
+  </item>
+  <item nodeId="node-42">
+    <command xml:space="preserve">take key</command>
+    <result xml:space="preserve">You found the key!&#x000A;&#x000A;[Your score has just gone up by ten points.]&#x000A;&#x000A;&gt;</result>
+    <commentary xml:space="preserve"></commentary>
+    <changed>NO</changed>
+    <children>
+      <child nodeId="node-43"/>
+    </children>
+  </item>
+  <item nodeId="node-43">
+    <command xml:space="preserve">e</command>
+    <result xml:space="preserve">(first opening the Living Room Door)&#x000A;&#x000A;Living Room&#x000A;You can see a Thinking Chair and a Side Table here.&#x000A;&#x000A;[Your score has just gone up by five points.]&#x000A;&#x000A;&gt;</result>
+    <commentary xml:space="preserve"></commentary>
+    <changed>NO</changed>
+    <children>
+      <child nodeId="node-44"/>
+    </children>
+  </item>
+  <item nodeId="node-44">
+    <command xml:space="preserve">x side table</command>
+    <result xml:space="preserve">Your trusted Side Table! You two have solved many a mystery together! Side Table has a drawer where you usually keep your handy dandy notebook.&#x000A;&#x000A;&gt;</result>
+    <commentary xml:space="preserve"></commentary>
+    <changed>NO</changed>
+    <children>
+      <child nodeId="node-45"/>
+    </children>
+  </item>
+  <item nodeId="node-45">
+    <command xml:space="preserve">unlock drawer</command>
+    <result xml:space="preserve">What do you want to unlock the drawer with?&#x000A;&#x000A;&gt;</result>
+    <commentary xml:space="preserve"></commentary>
+    <changed>NO</changed>
+    <children>
+      <child nodeId="node-46"/>
+    </children>
+  </item>
+  <item nodeId="node-46">
+    <command xml:space="preserve">unlock drawer with Crystal key</command>
+    <result xml:space="preserve">You unlock the drawer.&#x000A;&#x000A;&gt;</result>
+    <commentary xml:space="preserve"></commentary>
+    <changed>NO</changed>
+    <children>
+      <child nodeId="node-47"/>
+    </children>
+  </item>
+  <item nodeId="node-47">
+    <command xml:space="preserve">open drawer</command>
+    <result xml:space="preserve">Aha! your trusty handy dandy notebook!&#x000A;&#x000A;&gt;</result>
+    <commentary xml:space="preserve"></commentary>
+    <changed>NO</changed>
+    <children>
+      <child nodeId="node-48"/>
+    </children>
+  </item>
+  <item nodeId="node-48">
+    <command xml:space="preserve">take handy dandy notebook</command>
+    <result xml:space="preserve">*** You found the notebook! Congratulations! A winner is you! Now let's get down to solving some mysteries. ***&#x000A;&#x000A;&#x000A;In that game you scored 50 out of a possible 50, in 11 turns.&#x000A;&#x000A;&#x000A;Would you like to RESTART, RESTORE a saved game, QUIT or UNDO the last command?&#x000A;&gt;</result>
+    <commentary xml:space="preserve"></commentary>
+    <changed>NO</changed>
+  </item>
+</Skein>
