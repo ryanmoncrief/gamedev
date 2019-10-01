@@ -1,0 +1,21 @@
+fileFormatVersion: 2
+guid: fe92f88c3f5a7e34d9f93b3a878ca4c5
+timeCreated: 1493770402
+licenseType: Free
+TrueTypeFontImporter:
+  serializedVersion: 4
+  fontSize: 16
+  forceTextureCase: -2
+  characterSpacing: 0
+  characterPadding: 1
+  includeFontData: 1
+  fontName: Londrina Outline
+  fontNames:
+  - Londrina Outline
+  fallbackFontReferences: []
+  customCharacters: 
+  fontRenderingMode: 0
+  ascentCalculationMode: 1
+  userData: 
+  assetBundleName: 
+  assetBundleVariant: 
